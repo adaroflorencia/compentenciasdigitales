@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <main class="">
+        <div class="container-fluid bg-gray-4">
+            <div class="row align-items-center ">
+                <div class="col">
+                    <div class="p-4 ">
+                        <div class="d-flex justify-content-center align-items-center px-4">
+                            <form action="{% url 'login' %}" method="POST" class="card-body">
+                                <h2 class="text-center mb-4">Iniciar Sesión</h2>
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ next }}">
+                                <div class="mb-3">
+                                    <label for="id_username" class="oh font-weight-light">Email</label>
+                                    <input type="email" id="id_username" name="username" class="form-control"
+                                           placeholder="Ingresa tu email" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="id_password" class="oh font-weight-light">Contraseña</label>
+                                    <input type="password" id="id_password" name="password" class="form-control"
+                                           placeholder="Ingresa una contraseña" required>
+                                    <div class="error-color">
+                                        {{ error }}
+                                    </div>
+
+
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-blue mt-3">Iniciar Sesión</button>
+                                </div>
+                                <div class="my-3 text-center">
+                                    <p>¿No tienes cuenta? <a href="{% url 'signup' %}"
+                                                             class="text-decoration-none dark-link">Registrate</a>
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col p-0 d-none d-md-block">
+                    <img src="{% static 'images/img1.jpg' %}" alt="Signup" class="img-fluid w-100">
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+{% endblock %}

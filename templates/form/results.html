@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <section class="section section-sm section-last bg-default bg-gray-4">
+
+        <div class="results-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-10 col-lg-5 col-xl-6 text-center">
+                        <div class="badge-container">
+                            <div class="level-{{ total_level|lower }}">
+                                <div class="icono fl-bigmug-line-circular220 icono mt-5"></div>
+                                 <span class="heading-2">{{ total_level }}</span>
+                            </div>
+                            <h3 class="heading-4 my-3">Puntaje Total: {{ total_score }}</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-md-10 col-lg-7 col-xl-6 px-2">
+                        <h2 class="heading-3 m-4 text-start">Resultados por Tópico</h2>
+                        {% for topic_name, topic_data in results.items %}
+                            <div class="topic-container m-4">
+                                <div class="progress-linear progress-secondary level-{{ topic_data.level|lower }}">
+                                    <div class="progress-header">
+                                        <div class="d-flex align-items-center">
+                                            <p class="progress-title">{{ topic_name }}</p>
+                                            <div class="badge-small-wrapper my-4 ms-4">
+                                                <span class="badge-small-text ">{{ topic_data.level }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="progress-bar-linear-wrap">
+                                        <div class="progress-bar-linear " style="width: {{ topic_data.score }}%">
+                                            <span class="progress-value">{{ topic_data.score }}%</span>
+                                            <span class="progress-marker"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+    <h1 class="heading-3 m-4 text-start">Recomendaciones Personalizadas</h1>
+    
+    {% if recomendaciones %}
+        <ul>
+            {% for recomendacion in recomendaciones %}
+                <li>{{ recomendacion }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="m-4">No se encontraron recomendaciones para mostrar.</p>
+    {% endif %}
+    </section>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% load static %}
+<section class="section section-lg section-top-1 bg-gray-4">
+    <div class="container offset-negative-1">
+        <div class="box-categories cta-box-wrap">
+            <div class="box-categories-content">
+                <div class="row justify-content-center">
+                    <div class="col-md-4 wow fadeInDown col-9" data-wow-delay=".2s">
+                        <ul class="list-marked-2 box-categories-list">
+                            <li><a href="{% url 'docentes' %}"><img src="{% static 'images/teachers.jpg' %}" alt="" width="368"
+                                                 height="420"/></a>
+                                <h5 class="box-categories-title">Docentes</h5>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 wow fadeInDown col-9" data-wow-delay=".2s">
+                        <ul class="list-marked-2 box-categories-list">
+                            <li><a href="{% url 'estudiantes' %}"><img src="{% static 'images/students.jpg' %}" alt="" width="368"
+                                                 height="420"/></a>
+                                <h5 class="box-categories-title">Estudiantes</h5>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 wow fadeInDown col-9" data-wow-delay=".2s">
+                        <ul class="list-marked-2 box-categories-list">
+                            <li><a href="#"><img src="{% static 'images/non-teaching staff.jpg' %}" alt="" width="368"
+                                                 height="420"/></a>
+                                <h5 class="box-categories-title">No Docentes</h5>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
