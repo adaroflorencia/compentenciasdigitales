@@ -43,40 +43,41 @@ def get_questions_by_role(user):
 
 @login_required
 def evaluate(request):
-    # Si ya completó el formulario, redirigir a resultados
     if TopicResult.objects.filter(user=request.user).exists():
         return redirect('results')
 
     # Obtener todas las preguntas solo si no están en la sesión
     if 'all_questions' not in request.session:
         all_questions = list(get_questions_by_role(request.user))
-
-        # Guardar los IDs de las preguntas en la sesión
         request.session['all_questions'] = [q.id for q in all_questions]
     else:
-        # Recuperar las preguntas usando los IDs guardados
-        # Prueba de recuperación??
         question_ids = request.session['all_questions']
         all_questions = list(Question.objects.filter(id__in=question_ids))
 
-    # Inicializar variables de sesión si no existen
+    # Inicializar variables de sesión
     if 'answers' not in request.session:
         request.session['answers'] = {}
     if 'current_question' not in request.session:
         request.session['current_question'] = 0
     if 'topic_scores' not in request.session:
         request.session['topic_scores'] = {}
-    if 'accumulated_questions' not in request.session:
-        request.session['accumulated_questions'] = []
-    if 'total_score' not in request.session:
-        request.session['total_score'] = 0
+    if 'question_scores' not in request.session:  # Nuevo: guardar puntaje por pregunta
+        request.session['question_scores'] = {}
 
     current_question_index = request.session['current_question']
 
-    # Si es la última pregunta y ya fue respondida, ir a resultados
+    # Verificar si es la última pregunta y todas están respondidas
     if current_question_index >= len(all_questions):
-        request.session['form_completed'] = True
-        return redirect('results')
+        if len(request.session['answers']) == len(all_questions):
+            request.session['form_completed'] = True
+            return redirect('results')
+        else:
+            # Redirigir a la primera pregunta sin responder
+            for i, q in enumerate(all_questions):
+                if str(q.id) not in request.session['answers']:
+                    request.session['current_question'] = i
+                    current_question_index = i
+                    break
 
     current_question = all_questions[current_question_index]
     current_topic = current_question.topic
@@ -88,38 +89,46 @@ def evaluate(request):
         if selected_option:
             try:
                 option = Option.objects.get(id=selected_option)
+                question_id = str(current_question.id)
+                topic_name = current_topic.name
 
-                # Guardar la respuesta
+                # Actualizar respuestas y puntajes
                 answers = request.session['answers']
-                answers[str(current_question.id)] = selected_option
+                topic_scores = request.session['topic_scores']
+                question_scores = request.session['question_scores']
+
+                # Si ya existía una respuesta, restar el puntaje anterior
+                if question_id in answers:
+                    old_score = question_scores.get(question_id, 0)
+                    topic_scores[topic_name] = topic_scores.get(topic_name, 0) - old_score
+
+                # Guardar nueva respuesta y puntaje
+                answers[question_id] = selected_option
+                question_scores[question_id] = option.score
+                topic_scores[topic_name] = topic_scores.get(topic_name, 0) + option.score
+
+                # Actualizar sesión
                 request.session['answers'] = answers
+                request.session['topic_scores'] = topic_scores
+                request.session['question_scores'] = question_scores
 
-                # Actualizar puntaje solo si la pregunta no ha sido respondida antes
-                accumulated_questions = request.session['accumulated_questions']
-                if str(current_question.id) not in accumulated_questions:
-                    request.session['total_score'] += option.score
-                    accumulated_questions.append(str(current_question.id))
-                    request.session['accumulated_questions'] = accumulated_questions
-
-                    topic_scores = request.session['topic_scores']
-                    topic_name = current_topic.name
-                    topic_scores[topic_name] = topic_scores.get(topic_name, 0) + option.score
-                    request.session['topic_scores'] = topic_scores
-
-                # Si se presiona el botón de finalizar en la última pregunta
-                if 'finish' in request.POST and current_question_index == len(all_questions) - 1:
-                    request.session['form_completed'] = True
-                    request.session.modified = True
-                    return redirect('results')
+                # Si se presiona finalizar, verificar que todas las preguntas estén respondidas
+                if 'finish' in request.POST:
+                    if len(answers) == len(all_questions):
+                        request.session['form_completed'] = True
+                        request.session.modified = True
+                        return redirect('results')
+                    else:
+                                              return redirect('evaluate')
 
             except Option.DoesNotExist:
                 logging.error(f"Option with ID {selected_option} not found")
 
         # Procesar navegación
-        if 'next' in request.POST:
+        if 'next' in request.POST and current_question_index < len(all_questions) - 1:
             request.session['current_question'] += 1
-        elif 'previous' in request.POST:
-            request.session['current_question'] = max(0, request.session['current_question'] - 1)
+        elif 'previous' in request.POST and current_question_index > 0:
+            request.session['current_question'] -= 1
 
         request.session.modified = True
         return redirect('evaluate')
@@ -128,7 +137,7 @@ def evaluate(request):
     saved_answer = request.session['answers'].get(str(current_question.id), '')
 
     # Calcular progreso
-    progress = int((current_question_index / len(all_questions)) * 100) if all_questions else 0
+    progress = int((len(request.session['answers']) / len(all_questions)) * 100)
 
     context = {
         'question': current_question,
@@ -140,7 +149,8 @@ def evaluate(request):
         'has_next': current_question_index < len(all_questions) - 1,
         'topic_scores': request.session.get('topic_scores', {}),
         'current_index': current_question_index + 1,
-        'total_questions': len(all_questions)
+        'total_questions': len(all_questions),
+        'answered_questions': len(request.session['answers'])
     }
 
     return render(request, 'form/evaluate.html', context)
@@ -149,92 +159,109 @@ def evaluate(request):
 @login_required
 def results(request):
     try:
-        # Check if results already exist in database
         existing_results = TopicResult.objects.filter(user=request.user)
 
         if existing_results.exists():
-            # Return existing results from database
+            # Resultados ya existen en la base de datos
             final_results = {}
-            total_score = 0
-            total_questions = 0
+            total_points = 0
+            total_possible_points = 0
 
             for result in existing_results:
-                score_percentage = result.score
+                # Cada pregunta vale 6 puntos máximo
+                max_points_per_topic = result.total_questions * 6
+                points = (result.score * max_points_per_topic) / 100
+
                 final_results[result.topic.name] = {
-                    'score': (score_percentage * 100) / 6,
+                    'score': round(result.score, 2),  # Ya está en porcentaje
                     'total_questions': result.total_questions,
                     'answered_questions': result.total_questions,
                     'level': result.level
                 }
-                total_score += result.score
-                total_questions += 1
+                total_points += points
+                total_possible_points += max_points_per_topic
 
-            average_total = round(total_score / total_questions, 2) if total_questions > 0 else 0
+            average_total = round((total_points / total_possible_points) * 100, 2) if total_possible_points > 0 else 0
 
         else:
-            # Check if form is completed and results need to be saved
+            # Verificar si el formulario está completo
             if not request.session.get('form_completed'):
                 return redirect('evaluate')
 
-            topic_scores = request.session.get('topic_scores')
-            if not topic_scores:
+            topic_scores = request.session.get('topic_scores', {})
+            answers = request.session.get('answers', {})
+
+            if not topic_scores or not answers:
                 return redirect('evaluate')
 
-            # Calculate and save results only if they haven't been saved before
+            # Calcular y guardar resultados
             questions = get_questions_by_role(request.user)
             questions_by_topic = {}
             final_results = {}
+            total_points = 0
+            total_possible_points = 0
 
+            # Agrupar preguntas por tópico
             for question in questions:
                 if question.topic not in questions_by_topic:
                     questions_by_topic[question.topic] = []
                 questions_by_topic[question.topic].append(question)
 
-            accumulated_questions = request.session.get('accumulated_questions', [])
-            total_questions_answered = len(accumulated_questions)
-            total_score = request.session.get('total_score', 0)
-
+            # Calcular resultados por tópico
             for topic, questions_list in questions_by_topic.items():
                 if topic.name in topic_scores:
-                    questions_answered = len([q.id for q in questions_list if str(q.id) in accumulated_questions])
+                    total_questions = len(questions_list)
+                    max_points_possible = total_questions * 6  # 6 puntos máximo por pregunta
+                    topic_points = topic_scores[topic.name]
 
-                    if questions_answered > 0:
-                        average_score = (topic_scores[topic.name] * 100) / (questions_answered * 6)
-                        level = determine_level(average_score)
+                    # Calcular porcentaje real
+                    score_percentage = (topic_points / max_points_possible) * 100 if max_points_possible > 0 else 0
 
-                        # Save results to database
-                        TopicResult.objects.create(
-                            topic=topic,
-                            user=request.user,
-                            score=round(average_score, 2),
-                            level=level,
-                            total_questions=len(questions_list)
-                        )
+                    # Determinar nivel basado en el porcentaje
+                    level = determine_level(score_percentage)
 
-                        final_results[topic.name] = {
-                            'score': round(average_score, 2),
-                            'total_questions': len(questions_list),
-                            'answered_questions': questions_answered,
-                            'level': level
-                        }
+                    # Guardar en la base de datos
+                    TopicResult.objects.create(
+                        topic=topic,
+                        user=request.user,
+                        score=round(score_percentage, 2),
+                        level=level,
+                        total_questions=total_questions
+                    )
 
-            average_total = round(total_score / total_questions_answered, 2) if total_questions_answered > 0 else 0
+                    final_results[topic.name] = {
+                        'score': round(score_percentage, 2),
+                        'total_questions': total_questions,
+                        'answered_questions': len([q.id for q in questions_list if str(q.id) in answers]),
+                        'level': level
+                    }
 
-            # Clear session after saving results
-            session_keys = ['answers', 'current_question', 'topic_scores',
-                            'accumulated_questions', 'total_score', 'all_questions', 'form_completed']
+                    total_points += topic_points
+                    total_possible_points += max_points_possible
+
+            # Calcular promedio total
+            average_total = round((total_points / total_possible_points) * 100, 2) if total_possible_points > 0 else 0
+
+            # Limpiar la sesión
+            session_keys = [
+                'answers', 'current_question', 'topic_scores',
+                'question_scores', 'all_questions', 'form_completed'
+            ]
             for key in session_keys:
-                if key in request.session:
-                    del request.session[key]
+                request.session.pop(key, None)
 
         total_level = determine_level(average_total)
 
-        return render(request, 'form/results.html', {
+        context = {
             'results': final_results,
             'total_score': average_total,
             'user_role': request.user.role.name if request.user.role else None,
             'total_level': total_level,
-        })
+        }
+
+
+
+        return render(request, 'form/results.html', context)
 
     except Exception as e:
         logging.error(f"Error procesando resultados para usuario {request.user.email}: {e}")
@@ -243,17 +270,16 @@ def results(request):
         return redirect('evaluate')
 
 
-def determine_level(score):
-
-    if 0 <= score < 2 :
+def determine_level(percentage):
+    if 0 <= percentage <= 16.66:
         return 'A1'
-    elif score < 3:
+    elif percentage <= 33.33:
         return 'A2'
-    elif score < 4:
+    elif percentage <= 50:
         return 'B1'
-    elif score < 5:
+    elif percentage <= 66.66:
         return 'B2'
-    elif score < 6:
+    elif percentage <= 83.33:
         return 'C1'
     else:
         return 'C2'
