@@ -15,11 +15,11 @@
                         <a class="button button-secondary button-pipaluk text-decoration-none"
                            href="{% url 'evaluate' %}">Empezar</a>
                     {% else %}
-                        <p class="text-width-medium text-spacing-75 wow fadeInLeft" data-wow-delay=".1s">
+                        <p class="text-width-medium text-spacing-75 wow fadeInLeft " data-wow-delay=".1s">
                             Para acceder a esta función, inicia sesión.
                         </p>
                         <a class="button button-secondary button-pipaluk text-decoration-none"
-                           href="{% url 'login' %}?next={% url 'evaluate' %}">Iniciar sesión</a>
+                           href="{% url 'login' %}?next={% url 'docentes' %}">Iniciar sesión</a>
                     {% endif %}
                 </div>
             </div>
