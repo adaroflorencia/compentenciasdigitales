@@ -12,8 +12,8 @@ def docente(request):
 def estudiante(request):
     return render(request, 'form/estudiantes.html')
 
-def nodocentes(request):
-    return render(request, 'form/noDocentes.html')
+def no_docentes(request):
+    return render(request, 'form/no_docentes.html')
 
 
 def get_questions_by_role(user):
