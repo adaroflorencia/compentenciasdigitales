@@ -12,6 +12,9 @@ def docente(request):
 def estudiante(request):
     return render(request, 'form/estudiantes.html')
 
+def nodocentes(request):
+    return render(request, 'form/noDocentes.html')
+
 
 def get_questions_by_role(user):
     try:
@@ -86,6 +89,27 @@ def evaluate(request):
     if request.method == 'POST':
         selected_option = request.POST.get('option')
 
+        # Validación para el botón "next"
+        if 'next' in request.POST:
+            if not selected_option and str(current_question.id) not in request.session['answers']:
+
+                context = {
+                    'question': current_question,
+                    'topic': current_topic,
+                    'options': options,
+                    'progress': int((len(request.session['answers']) / len(all_questions)) * 100),
+                    'saved_answer': request.session['answers'].get(str(current_question.id), ''),
+                    'has_previous': current_question_index > 0,
+                    'has_next': current_question_index < len(all_questions) - 1,
+                    'topic_scores': request.session.get('topic_scores', {}),
+                    'current_index': current_question_index + 1,
+                    'total_questions': len(all_questions),
+                    'answered_questions': len(request.session['answers']),
+                    'user_role': request.user.role.name if request.user.role else None,
+                    'error_message': 'Por favor, seleccione una opción antes de continuar.'
+                }
+                return render(request, 'form/evaluate.html', context)
+
         if selected_option:
             try:
                 option = Option.objects.get(id=selected_option)
@@ -150,7 +174,8 @@ def evaluate(request):
         'topic_scores': request.session.get('topic_scores', {}),
         'current_index': current_question_index + 1,
         'total_questions': len(all_questions),
-        'answered_questions': len(request.session['answers'])
+        'answered_questions': len(request.session['answers']),
+        'user_role': request.user.role.name if request.user.role else None
     }
 
     return render(request, 'form/evaluate.html', context)

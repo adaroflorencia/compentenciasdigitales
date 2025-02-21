@@ -17,8 +17,14 @@
                 <form method="post">
                     {% csrf_token %}
                     <h5 class="heading-6 my-2 p-2">{{ question.text }}</h5>
+                    {% if error_message %}
+                                <div class="alert alert-danger">
+                                    {{ error_message }}
+                                </div>
+                            {% endif %}
                     {% for option in options %}
                         <div class="form-check m-2 ms-4">
+                            
                             <input
                                     class="form-check-input"
                                     type="radio"
@@ -29,6 +35,7 @@
                             <label class="form-check-label" for="option_{{ option.id }}">
                                 {{ option.text }}
                             </label>
+                            
                         </div>
                     {% endfor %}
                     <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
