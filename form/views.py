@@ -5,6 +5,8 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Topic, Question, Option, TopicResult
+from django.http import HttpResponse
+from pdf_generator.views import generar_pdf
 
 def docente(request):
     return render(request, 'form/docentes.html')
@@ -284,6 +286,8 @@ def results(request):
             'total_level': total_level,
         }
 
+        if request.GET.get('format') == 'pdf':
+            return generar_pdf(request, 'form/results_pdf.html', context)
 
 
         return render(request, 'form/results.html', context)

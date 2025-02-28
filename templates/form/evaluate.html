@@ -18,10 +18,10 @@
                     {% csrf_token %}
                     <h5 class="heading-6 my-2 p-2">{{ question.text }}</h5>
                     {% if error_message %}
-                                <div class="alert alert-danger">
-                                    {{ error_message }}
-                                </div>
-                            {% endif %}
+                        <div class="alert alert-danger">
+                            {{ error_message }}
+                        </div>
+                    {% endif %}
                     {% for option in options %}
                         <div class="form-check m-2 ms-4">
 
@@ -55,10 +55,9 @@
                             </button>
                         {% endif %}
                     </div>
-
-
                 </form>
 
+                
             </div>
         </div>
     </section>
