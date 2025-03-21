@@ -9,45 +9,47 @@
     <link href="{% static 'css/font.css' %}" rel="stylesheet">
 </head>
 <body>
-    <div class="header">
-        <h1>Informe de Resultados de Evaluación</h1>
-        <p>Rol: {{ user_role }}</p>
-        <p>Fecha: {% now "d/m/Y" %}</p>
-    </div>
-    
-    <h2>Resultados por Tópico</h2>
-    <table class="results-table">
-        <thead>
-            <tr>
-                <th>Tópico</th>
-                <th>Puntaje (%)</th>
-                <th>Nivel</th>
-                <th>Preguntas</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for topic, data in results.items %}
-            <tr>
-                <td>{{ topic }}</td>
-                <td>{{ data.score }}%</td>
-                <td class="level">{{ data.level }}</td>
-                <td>{{ data.answered_questions }}/{{ data.total_questions }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    
-    <div class="summary">
-        <h2>Resultado Final</h2>
-        <p>Puntaje Promedio: <strong>{{ total_score }}%</strong></p>
-        <p>Nivel Alcanzado: <span class="level">{{ total_level }}</span></p>
-    </div>
-    
-    <div class="level-description">
+<div class="header">
+    <h1>Informe de Resultados de Evaluación</h1>
+    <p>Rol: {{ user_role }}</p>
+    <p>Fecha: {% now "d/m/Y" %}</p>
+</div>
+
+<h2>Resultados por Tópico</h2>
+<table class="results-table">
+    <thead>
+    <tr>
+    <tr>
+        <th>Tópico</th>
+        <th>Puntaje (%)</th>
+        <th>Nivel</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for topic, data in results.items %}
+        <tr>
+            <td>{{ topic }}</td>
+            <td>{{ data.score }}%</td>
+            <td class="level">{{ data.level }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<div class="summary">
+    <h2>Resultado Final</h2>
+    <p>Puntaje Promedio: <strong>{{ total_score }}%</strong></p>
+    <p>Nivel Alcanzado: <span class="level">{{ total_level }}</span></p>
+</div>
+
+<div class="level-description">
     <h3>Descripción de Niveles</h3>
-    <p><strong>A1-A2:</strong> Nivel inicial - El usuario posee conocimientos básicos y limitados, con capacidad para manejar situaciones cotidianas simples.</p>
-    <p><strong>B1-B2:</strong> Nivel intermedio - El usuario tiene un dominio más amplio y fluido del tema, pudiendo comprender y participar en conversaciones más complejas.</p>
-    <p><strong>C1-C2:</strong> Nivel experto - El usuario tiene un dominio completo del tema, con habilidades para analizar y resolver problemas complejos de manera eficiente.</p>
+    <p><strong>A1-A2:</strong> Nivel inicial - El usuario posee conocimientos básicos y limitados, con capacidad
+        para manejar situaciones cotidianas simples.</p>
+    <p><strong>B1-B2:</strong> Nivel intermedio - El usuario tiene un dominio más amplio y fluido del tema, pudiendo
+        comprender y participar en conversaciones más complejas.</p>
+    <p><strong>C1-C2:</strong> Nivel experto - El usuario tiene un dominio completo del tema, con habilidades para
+        analizar y resolver problemas complejos de manera eficiente.</p>
 </div>
 </body>
 </html>

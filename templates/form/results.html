@@ -3,10 +3,9 @@
 
 {% block content %}
     <section class="section section-sm section-last bg-default bg-gray-4">
-
         <div class="results-section">
             <div class="container">
-                <div class="row justify-content-center">
+                <div class="row justify-content-center py-4">
                     <div class="col-md-10 col-lg-5 col-xl-6 text-center">
                         <div class="badge-container">
                             <div class="level-{{ total_level|lower }}">
@@ -17,8 +16,8 @@
                         </div>
                     </div>
 
-                    <div class="col-md-10 col-lg-7 col-xl-6 px-2">
-                        <h2 class="heading-3 m-4 text-start">Tu nivel de Competencias Digitales</h2>
+                    <div class="col-md-10 col-lg-7 col-xl-6 px-2 ">
+                        <h2 class="heading-3 m-4 text-center">Tu nivel de Competencias Digitales</h2>
                         {% for topic_name, topic_data in results.items %}
                             <div class="topic-container m-4">
                                 <div class="progress-linear progress-secondary level-{{ topic_data.level|lower }}">
@@ -46,23 +45,33 @@
 
         <!-- Botón para generar el PDF -->
         <div class="d-flex justify-content-center mt-5">
-            <a href="{% url 'results' %}?format=pdf" class="btn btn-blue">
+            <a href="{% url 'results' %}?format=pdf" class="button button-default-outline button-ujarak text-decoration-none btn-blue">
                 <i class="fas fa-file-pdf"></i> Descargar como PDF
             </a>
         </div>
 
     </section>
-    <section>
-        <h1 class="heading-3 m-4 text-start">Recomendaciones Personalizadas</h1>
+    <section class="quote-lisa" data-caption-animate="slideInUp" data-caption-delay="300">
+        <div class="level-description m-5">
+            <h3 class="heading-3 my-4 text-center">Descripción de Niveles</h3>
+            <ol class="list-marked">
+                <li class="my-3"><strong>A1-A2: Nivel inicial</strong>  - El usuario posee conocimientos básicos y limitados, con
+                    capacidad
+                    para manejar situaciones cotidianas simples.
+                </li>
+                <li class="my-3"><strong>B1-B2: Nivel intermedio</strong>  - El usuario tiene un dominio más amplio y fluido del tema,
+                    pudiendo comprender y participar en conversaciones más complejas.
+                </li>
+                <li class="my-3"><strong>C1-C2: Nivel experto</strong> - El usuario tiene un dominio completo del tema, con
+                    habilidades
+                    para analizar y resolver problemas complejos de manera eficiente.
+                </li>
 
-        {% if recomendaciones %}
-            <ul>
-                {% for recomendacion in recomendaciones %}
-                    <li>{{ recomendacion }}</li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p class="m-4">No se encontraron recomendaciones para mostrar.</p>
-        {% endif %}
+            </ol>
+
+        </div>
+
+
     </section>
+
 {% endblock %}

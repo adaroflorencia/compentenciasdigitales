@@ -497,7 +497,19 @@ h6, .heading-6 {
     height: 100%;
 }
 
-/*insignias*/
+/*seccion result*/
+
+ .results-section{
+     padding: 2rem;
+
+ }
+
+ .badge-container {
+     background-color: #ffffff;
+     padding: 1.5rem;
+     border-radius: 1rem;
+     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+ }
 
 
 /* Estilos base del ícono */
@@ -866,7 +878,7 @@ html .list-inline-md > * {
     width: 9px;
     margin-right: 16px;
     border-radius: 50%;
-    background: #d7d7d7;
+    background: var(--main-color);
 }
 
 .list-marked > li + li {
@@ -2351,19 +2363,19 @@ hr {
 }
 
 .button-default-outline, .button-default-outline:focus {
-    color: #ffffff;
+    color: var(--main-color);
     background-color: transparent;
-    border-color: #ffffff;
+    border-color: var(--main-color);
 }
 
 .button-default-outline:hover, .button-default-outline:active {
     color: #ffffff;
-    background-color: #2659C7;
-    border-color: #50ba87;
+    background-color: var(--main-color);
+    border-color: var(--main-color);
 }
 
 .button-default-outline.button-ujarak::before {
-    background: #2659C7;
+    background: var(--main-color);
 }
 
 .button-default-outline.button-pipaluk, .button-default-outline.button-pipaluk:focus {
