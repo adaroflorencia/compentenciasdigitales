@@ -68,6 +68,24 @@ html, body {
     margin: 0;
 }
 
+/*Nav */
+
+
+
+.dark-link {
+    color: var(--fourty-color) !important;
+}
+
+.dark-link:hover,
+.dark-link:focus {
+    color: var(--main-color) !important;
+}
+
+.dark-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
 /* Contexts */
 /* Typography */
 body {
@@ -450,7 +468,7 @@ h6, .heading-6 {
 }
 
 .icono{
-    font-size: 300px;
+    font-size: 250px
 
 }
 @media (min-width: 992px) {
