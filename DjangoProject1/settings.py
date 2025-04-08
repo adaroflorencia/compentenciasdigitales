@@ -85,7 +85,7 @@ DATABASES = {
 # Configuración de sesiones
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_NAME = 'sessionid'
-SESSION_COOKIE_AGE = 3600
+SESSION_COOKIE_AGE = 360000000
 SESSION_SAVE_EVERY_REQUEST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
