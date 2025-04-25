@@ -1,0 +1,420 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <section class="section section-sm section-last bg-default bg-gray-4 ">
+        <div class="container pt-5">
+            <div class="card shadow-lg">
+                <div class="card-body mx-5 my-4">
+                    <h3 class="heading-3 px-4 py-3 pt-2 text-center">Selecciona un motor de búsqueda</h3>
+                    <h5 class="m-3">Haz click para seleccionar una imagen. Solo 2 imágenes son
+                        correctas.</h5>
+                    <div class="row m-4 gap-4 d-flex justify-content-center pt-4">
+                        <!-- Imagen 1 -->
+                        <div class="col-3 d-flex justify-content-center">
+                            <div class="image-item shade p-3 w-75" data-id="0" data-correct="false">
+                                <img src="{% static 'images/dropbox.png' %}" alt="Imagen 1" class="">
+                                <div class="selection-overlay"></div>
+                            </div>
+                        </div>
+
+                        <!-- Imagen 2 (correcta) -->
+                        <div class="col-3 d-flex justify-content-center">
+                            <div class="image-item shade p-3 w-75" data-id="1" data-correct="true">
+                                <img src="{% static 'images/google.png' %}" alt="Imagen 2">
+                                <div class="selection-overlay"></div>
+                            </div>
+                        </div>
+
+                        <!-- Imagen 3 -->
+                        <div class="col-3 d-flex justify-content-center">
+                            <div class="image-item shade p-3 w-75" data-id="2" data-correct="false">
+                                <img src="{% static 'images/vscode.png' %}" alt="Imagen 3">
+                                <div class="selection-overlay"></div>
+                            </div>
+                        </div>
+
+                        <!-- Imagen 4 -->
+                        <div class="col-3 d-flex justify-content-center">
+                            <div class="image-item shade p-3 w-75" data-id="3" data-correct="false">
+                                <img src="{% static 'images/linux.png' %}" alt="Imagen 4">
+                                <div class="selection-overlay"></div>
+                            </div>
+                        </div>
+
+                        <!-- Imagen 5 (correcta) -->
+                        <div class="col-3 d-flex justify-content-center">
+                            <div class="image-item shade p-3 w-75" data-id="4" data-correct="true">
+                                <img src="{% static 'images/mozilla firefox.png' %}" alt="Imagen 5">
+                                <div class="selection-overlay"></div>
+                            </div>
+                        </div>
+
+                        <!-- Imagen 6 -->
+                        <div class="col-3 d-flex justify-content-center">
+                            <div class="image-item shade p-3 w-75" data-id="5" data-correct="false">
+                                <img src="{% static 'images/drive.png' %}" alt="Imagen 6">
+                                <div class="selection-overlay"></div>
+                            </div>
+                        </div>
+
+                        <!-- Imagen 7 -->
+                        <div class="col-3 d-flex justify-content-center">
+                            <div class="image-item shade p-3 w-75" data-id="6" data-correct="false">
+                                <img src="{% static 'images/nodejs.png' %}" alt="Imagen 7">
+                                <div class="selection-overlay"></div>
+                            </div>
+                        </div>
+
+                        <!-- Imagen 8 -->
+                        <div class="col-3 d-flex justify-content-center">
+                            <div class="image-item shade p-3 w-75" data-id="7" data-correct="false">
+                                <img src="{% static 'images/slack.png' %}" alt="Imagen 8">
+                                <div class="selection-overlay"></div>
+                            </div>
+                        </div>
+
+                        <!-- Imagen 9 -->
+                        <div class="col-3 d-flex justify-content-center">
+                            <div class="image-item shade p-3 w-75" data-id="8" data-correct="false">
+                                <img src="{% static 'images/whatsapp.png' %}" alt="Imagen 9">
+                                <div class="selection-overlay"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <hr>
+        <div class="container pt-5">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">Busca las coordenadas</h3>
+                    <h5 class="m-3">Encuentra el lugar del que se trata </h5>
+                    <h6 class="m-3">Latitud: -32.8806343</h6>
+                    <h6 class="m-3">Longitud: -68.8769366</h6>
+                    <div class="row g-1 d-flex align-items-center">
+                        <div class="col-auto">
+                            <label for="respuesta" class="col-form-label m-3"><h6>Respuesta:</h6></label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" id="respuesta" class="form-control"
+                                   aria-describedby="passwordHelpInline">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <div class="container pt-5">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">Nombra el autor de un texto</h3>
+                    <h5 class="m-3">¿Qué Autor dijo la frase celebre "Siempre imaginé que el Paraíso sería algún tipo de
+                        biblioteca"?</h5>
+                    <div class="row g-1 d-flex align-items-center">
+                        <div class="col-auto">
+                            <label for="respuesta" class="col-form-label m-3"><h6>Respuesta:</h6></label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" id="respuesta" class="form-control"
+                                   aria-describedby="passwordHelpInline">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="container pt-5">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">Nombra un navegador y un motor de
+                        búsqueda</h3>
+                    <div class="row g-2 d-flex align-items-center m-3">
+                        <div class="col-auto">
+                            <label for="respuesta" class="col-form-label"><h6>Navegador:</h6></label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" id="respuesta" class="form-control"
+                                   aria-describedby="passwordHelpInline">
+                        </div>
+                    </div>
+                    <div class="row g-2 d-flex align-items-center m-3">
+                        <div class="col-auto">
+                            <label for="respuesta" class="col-form-label"><h6>Motor de búsqueda:</h6></label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" id="respuesta" class="form-control"
+                                   aria-describedby="passwordHelpInline">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="container pt-5">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">Investigación</h3>
+                    <h5 class="m-3">¿Qué estructura es la más alta y la más baja?</h5>
+                    <h6 class="m-3">Entre las opciones: Torre Eiffel - Burj
+                        Khalifa - Obelisco</h6>
+                    <div class="row g-2 d-flex align-items-center m-3">
+                        <div class="col-auto">
+                            <label for="respuesta" class="col-form-label"><h6>La más alta:</h6></label>
+                        </div>
+                        <div class="col-auto">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Selecciona</option>
+                                <option value="1">Torre Eiffel</option>
+                                <option value="2">Burj Khalifa</option>
+                                <option value="3">Obelisco</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row g-2 d-flex align-items-center m-3">
+                        <div class="col-auto">
+                            <label for="respuesta" class="col-form-label"><h6>La más baja:</h6></label>
+                        </div>
+                        <div class="col-auto">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Selecciona</option>
+                                <option value="1">Torre Eiffel</option>
+                                <option value="2">Burj Khalifa</option>
+                                <option value="3">Obelisco</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="container pt-5">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">Visite la página</h3>
+                    <h5 class="m-3">¿Qué nombre se muestra? <a href="https://www.argentina.gob.ar/inti" target="_blank">Link</a>
+                    </h5>
+                    <div class="row g-1 d-flex align-items-center">
+                        <div class="col-auto">
+                            <label for="respuesta" class="col-form-label m-3"><h6>Respuesta:</h6></label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" id="respuesta" class="form-control"
+                                   aria-describedby="passwordHelpInline">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="container pt-5">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">Nombre una enciclopedia colaborativa en
+                        línea</h3>
+                    <div class="row g-1 d-flex align-items-center">
+                        <div class="col-auto">
+                            <label for="respuesta" class="col-form-label m-3"><h6>Respuesta:</h6></label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" id="respuesta" class="form-control"
+                                   aria-describedby="passwordHelpInline">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="container pt-5">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">Ir a la página de inicio de una web</h3>
+                    <h5 class="m-3">Página web: https://nave.uncuyo.edu.ar/evento/categoria/talleres-y-capacitaciones</h5>
+                    <div class="row g-1 d-flex align-items-center">
+                        <div class="col-auto">
+                            <label for="respuesta" class="col-form-label m-3"><h6>Respuesta:</h6></label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" id="respuesta" class="form-control"
+                                   aria-describedby="passwordHelpInline">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="container pt-5">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">Encuentra la imagen original</h3>
+                    <h5 class="m-3">Explora la web para encontrar la imagen original y coloca el nombre del animal que
+                        aparece en la misma.</h5>
+                    <img src="{% static 'images/investiga.jpg' %}" alt="Pradera" class="rounded mx-auto d-block">
+                    <div class="row g-1 d-flex align-items-center">
+                        <div class="col-auto">
+                            <label for="respuesta" class="col-form-label m-3"><h6>Respuesta:</h6></label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" id="respuesta" class="form-control"
+                                   aria-describedby="passwordHelpInline">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="container pt-5">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">Enlaces de búsqueda</h3>
+                    <h5 class="m-3">Detecta que sección se especifica un acuerdo comercial.</h5>
+                    <img src="{% static 'images/acuerdo_comercial.png' %}" alt="Computadora"
+                         class="rounded mx-auto d-block">
+                    <div class="row g-2 d-flex align-items-center m-3">
+                        <div class="col-auto">
+                            <label for="respuesta" class="col-form-label"><h6>Respuesta:</h6></label>
+                        </div>
+                        <div class="col-auto">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Selecciona</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row g-2 d-flex align-items-center m-3">
+                        <div class="col-auto">
+                            <label for="respuesta" class="col-form-label"><h6>Respuesta:</h6></label>
+                        </div>
+                        <div class="col-auto">
+                            <select class="form-select" aria-label="Default select example">
+                                <option selected>Selecciona</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="container pt-5">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">Faltan dos carácteres en la siguiente URL</h3>
+                    <h5 class="m-3">Completalo</h5>
+                    <h6 class="m-3 fw-bold">htps://www.uncuyo.edu.a/bienestar/fondo-de-iniciativas-estudiantiles</h6>
+                    <div class="row g-2 d-flex align-items-center m-3">
+                        <div class="col-auto">
+                            <label for="respuesta" class="col-form-label"><h6>URL corregida:</h6></label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" id="respuesta" class="form-control"
+                                   aria-describedby="passwordHelpInline">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="container pt-5">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">¿Quién escribió el artículo a
+                        continuación?</h3>
+                    <img src="{% static 'images/reportaje.png' %}" alt="Articulo Periodistico"
+                         class="rounded mx-auto d-block">
+                    <div class="row g-2 d-flex align-items-center m-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
+                            <label class="form-check-label" for="radioDefault1">
+                                Ramon López de Mántaras
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
+                            <label class="form-check-label" for="radioDefault2">
+                                Inma Flores
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
+                            <label class="form-check-label" for="radioDefault2">
+                                Manuel G. Pascual
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <div class="container pt-5">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">Encuentra la imagen original</h3>
+                    <h5 class="m-3">Manuel creó un fotomontaje para engañar y divertir a sus compañeros de clase.</h5>
+                    <h5 class="m-3">Cambió un elemento en una fotografía de Neil Armstrong caminando en la Luna.</h5>
+                    <h6 class="m-3">Cual ?</h6>
+                    <img src="{% static 'images/moon.jpg' %}" alt="Neil Armstrong" class="rounded mx-auto d-block">
+                    <div class="row g-2 d-flex align-items-center m-3">
+                        <div class="col-auto">
+                            <label for="respuesta" class="col-form-label"><h6>Manuel editó:</h6></label>
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" id="respuesta" class="form-control"
+                                   aria-describedby="passwordHelpInline">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="container pt-5">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">¿Quién escribió el artículo a
+                        continuación?</h3>
+                    <h5 class="m-3">Tres amigos leyeron algo de información en internet.</h5>
+                    <h5 class="m-3">Esta información es verdadera..</h5>
+                    <h5 class="m-3">¿Quién tiene el mejor argumento?</h5>
+
+                    <img src="{% static 'images/avatar.png' %}" alt="Articulo Periodistico"
+                         class="rounded mx-auto d-block">
+                    <div class="row g-2 d-flex align-items-center m-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1">
+                            <label class="form-check-label" for="radioDefault1">
+                                Sofía
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
+                            <label class="form-check-label" for="radioDefault2">
+                                Jesús
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
+                            <label class="form-check-label" for="radioDefault2">
+                                Marta
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    {% block extra_scripts %}
+        <script src="{% static 'js/activity.js' %}"></script>
+    {% endblock %}
+{% endblock %}

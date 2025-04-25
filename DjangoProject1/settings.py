@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',
     'accounts',
     'form',
+    'prueba',
 ]
 
 AUTH_USER_MODEL = 'accounts.CustomUser'

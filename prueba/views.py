@@ -1,264 +1,90 @@
-import logging
-
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+from .models import Actividad, ResultadoTopico, Subtopico
 from django.contrib.auth.decorators import login_required
-from .models import Topic, Question, Option, TopicResult
+import json
 
-def docente(request):
-    return render(request, 'form/docentes.html')
+def menu_activities(request):
+    return render(request, 'activities/menu_activities.html')
 
-def estudiante(request):
-    return render(request, 'form/estudiantes.html')
+def competencias(request):
+    actividad = Actividad.objects.first()
+    total_actividades = Actividad.objects.count()
 
-def obtener_preguntas_por_rol(usuario):
-    try:
-        if not usuario.rol:
-            logging.warning(f"El usuario {usuario.email} no tiene un rol asignado")
-            return Question.objects.none()
-
-        if usuario.rol.nombre == 'administrador':
-            preguntas = Question.objects.all()
-            return preguntas
-
-        tema = Topic.objects.filter(rol=usuario.rol)
-
-        if not tema.exists():
-            logging.warning(f"No se encontró ningún tema para el rol {usuario.rol.nombre}")
-            return Question.objects.none()
-
-        preguntas = Question.objects.filter(tema__in=tema)
-
-        return preguntas
-
-    except Exception as e:
-        logging.error(f"Error al obtener preguntas para el usuario {usuario.email}: {e}")
-        return Question.objects.none()
+    return render(request, 'form/competencias.html', {
+        'actividad': actividad,
+        'total_actividades': total_actividades,
+    })
 
 
-@login_required
-def evaluar(request):
-    # Si ya completó el formulario, redirigir a resultados
-    if TopicResult.objects.filter(usuario=request.user).exists():
-        return redirect('resultados')
-
-    # Obtener todas las preguntas solo si no están en la sesión
-    if 'todas_las_preguntas' not in request.session:
-        todas_las_preguntas = list(obtener_preguntas_por_rol(request.user))
-        # Guardar los IDs de las preguntas en la sesión
-        request.session['todas_las_preguntas'] = [q.id for q in todas_las_preguntas]
+def obtener_actividad_aleatoria(request, subtopico_id=None):
+    if subtopico_id is None:
+        subtopico = Subtopico.objects.order_by('?').first()
+        if not subtopico:
+            return render(request, 'error.html', {'message': 'No hay subtópicos disponibles'})
     else:
-        # Recuperar las preguntas usando los IDs guardados
-        ids_preguntas = request.session['todas_las_preguntas']
-        todas_las_preguntas = list(Question.objects.filter(id__in=ids_preguntas))
+        subtopico = get_object_or_404(Subtopico, id=subtopico_id)
 
-    # Inicializar variables de sesión si no existen
-    if 'respuestas' not in request.session:
-        request.session['respuestas'] = {}
-    if 'pregunta_actual' not in request.session:
-        request.session['pregunta_actual'] = 0
-    if 'puntajes_tema' not in request.session:
-        request.session['puntajes_tema'] = {}
-    if 'preguntas_acumuladas' not in request.session:
-        request.session['preguntas_acumuladas'] = []
-    if 'puntaje_total' not in request.session:
-        request.session['puntaje_total'] = 0
+    actividad = Actividad.objects.filter(subtopico=subtopico).order_by('?').first()
+    if not actividad:
+        return render(request, 'error.html', {'message': 'No hay actividades disponibles'})
 
-    indice_pregunta_actual = request.session['pregunta_actual']
+    return render(request, 'activities/actividad.html', {
+        'actividad': actividad,
+        'subtopico': subtopico,
+        'total_actividades': Actividad.objects.filter(subtopico=subtopico).count()
+    })
 
-    # Si es la última pregunta y ya fue respondida, ir a resultados
-    if indice_pregunta_actual >= len(todas_las_preguntas):
-        request.session['formulario_completado'] = True
-        return redirect('resultados')
 
-    pregunta_actual = todas_las_preguntas[indice_pregunta_actual]
-    tema_actual = pregunta_actual.tema
-    opciones = Option.objects.filter(pregunta=pregunta_actual)
-
+def evaluar_respuesta(request):
     if request.method == 'POST':
-        opcion_seleccionada = request.POST.get('opcion')
+        actividad_id = request.POST.get('actividad_id')
+        respuesta_usuario = json.loads(request.POST.get('respuesta_usuario', '[]'))
 
-        if opcion_seleccionada:
-            try:
-                opcion = Option.objects.get(id=opcion_seleccionada)
+        actividad = get_object_or_404(Actividad, id=actividad_id)
+        puntaje = actividad.evaluar(respuesta_usuario)
 
-                # Guardar la respuesta
-                respuestas = request.session['respuestas']
-                respuestas[str(pregunta_actual.id)] = opcion_seleccionada
-                request.session['respuestas'] = respuestas
-
-                # Actualizar puntaje solo si la pregunta no ha sido respondida antes
-                preguntas_acumuladas = request.session['preguntas_acumuladas']
-                if str(pregunta_actual.id) not in preguntas_acumuladas:
-                    request.session['puntaje_total'] += opcion.puntaje
-                    preguntas_acumuladas.append(str(pregunta_actual.id))
-                    request.session['preguntas_acumuladas'] = preguntas_acumuladas
-
-                    puntajes_tema = request.session['puntajes_tema']
-                    nombre_tema = tema_actual.nombre
-                    puntajes_tema[nombre_tema] = puntajes_tema.get(nombre_tema, 0) + opcion.puntaje
-                    request.session['puntajes_tema'] = puntajes_tema
-
-                # Si se presiona el botón de finalizar en la última pregunta
-                if 'finalizar' in request.POST and indice_pregunta_actual == len(todas_las_preguntas) - 1:
-                    request.session['formulario_completado'] = True
-                    request.session.modified = True
-                    return redirect('resultados')
-
-            except Option.DoesNotExist:
-                logging.error(f"Opción con ID {opcion_seleccionada} no encontrada")
-
-        # Procesar navegación
-        if 'siguiente' in request.POST:
-            request.session['pregunta_actual'] += 1
-        elif 'anterior' in request.POST:
-            request.session['pregunta_actual'] = max(0, request.session['pregunta_actual'] - 1)
-
-        request.session.modified = True
-        return redirect('evaluar')
-
-    # Recuperar respuesta guardada
-    respuesta_guardada = request.session['respuestas'].get(str(pregunta_actual.id), '')
-
-    # Calcular progreso
-    progreso = int((indice_pregunta_actual / len(todas_las_preguntas)) * 100) if todas_las_preguntas else 0
-
-    contexto = {
-        'pregunta': pregunta_actual,
-        'tema': tema_actual,
-        'opciones': opciones,
-        'progreso': progreso,
-        'respuesta_guardada': respuesta_guardada,
-        'tiene_anterior': indice_pregunta_actual > 0,
-        'tiene_siguiente': indice_pregunta_actual < len(todas_las_preguntas) - 1,
-        'puntajes_tema': request.session.get('puntajes_tema', {}),
-        'indice_actual': indice_pregunta_actual + 1,
-        'total_preguntas': len(todas_las_preguntas)
-    }
-
-    return render(request, 'form/evaluar.html', contexto)
-
-@login_required
-def resultados(request):
-    try:
-        # Verificar si ya existen resultados en la base de datos
-        resultados_existentes = TopicResult.objects.filter(usuario=request.user)
-
-        if resultados_existentes.exists():
-            # Devolver los resultados existentes desde la base de datos
-            resultados_finales = {}
-            puntaje_total = 0
-            total_preguntas = 0
-
-            for resultado in resultados_existentes:
-                porcentaje_puntaje = resultado.puntaje
-                resultados_finales[resultado.tema.nombre] = {
-                    'puntaje': (porcentaje_puntaje * 100) / 6,
-                    'total_preguntas': resultado.total_preguntas,
-                    'preguntas_respondidas': resultado.total_preguntas,
-                    'nivel': resultado.nivel
-                }
-                puntaje_total += resultado.puntaje
-                total_preguntas += 1
-
-            promedio_total = round(puntaje_total / total_preguntas, 2) if total_preguntas > 0 else 0
-
-        else:
-            # Verificar si el formulario está completado y los resultados deben guardarse
-            if not request.session.get('formulario_completado'):
-                return redirect('evaluar')
-
-            puntajes_tema = request.session.get('puntajes_tema')
-            if not puntajes_tema:
-                return redirect('evaluar')
-
-            # Calcular y guardar resultados solo si no han sido guardados antes
-            preguntas = obtener_preguntas_por_rol(request.user)
-            preguntas_por_tema = {}
-            resultados_finales = {}
-
-            for pregunta in preguntas:
-                if pregunta.tema not in preguntas_por_tema:
-                    preguntas_por_tema[pregunta.tema] = []
-                preguntas_por_tema[pregunta.tema].append(pregunta)
-
-            preguntas_acumuladas = request.session.get('preguntas_acumuladas', [])
-            total_preguntas_respondidas = len(preguntas_acumuladas)
-            puntaje_total = request.session.get('puntaje_total', 0)
-
-            for tema, lista_preguntas in preguntas_por_tema.items():
-                if tema.nombre in puntajes_tema:
-                    preguntas_respondidas = len([q.id for q in lista_preguntas if str(q.id) in preguntas_acumuladas])
-
-                    if preguntas_respondidas > 0:
-                        puntaje_promedio = (puntajes_tema[tema.nombre] * 100) / (preguntas_respondidas * 6)
-                        nivel = determinar_nivel(puntaje_promedio)
-
-                        # Guardar resultados en la base de datos
-                        TopicResult.objects.create(
-                            tema=tema,
-                            usuario=request.user,
-                            puntaje=round(puntaje_promedio, 2),
-                            nivel=nivel,
-                            total_preguntas=len(lista_preguntas)
-                        )
-
-                        resultados_finales[tema.nombre] = {
-                            'puntaje': round(puntaje_promedio, 2),
-                            'total_preguntas': len(lista_preguntas),
-                            'preguntas_respondidas': preguntas_respondidas,
-                            'nivel': nivel
-                        }
-
-            promedio_total = round(puntaje_total / total_preguntas_respondidas, 2) if total_preguntas_respondidas > 0 else 0
-
-            # Limpiar la sesión después de guardar los resultados
-            claves_sesion = ['respuestas', 'pregunta_actual', 'puntajes_tema',
-                             'preguntas_acumuladas', 'puntaje_total', 'todas_las_preguntas', 'formulario_completado']
-            for clave in claves_sesion:
-                if clave in request.session:
-                    del request.session[clave]
-
-        nivel_total = determinar_nivel(promedio_total)
-
-        return render(request, 'form/resultados.html', {
-            'resultados': resultados_finales,
-            'puntaje_total': promedio_total,
-            'rol_usuario': request.user.rol.nombre if request.user.rol else None,
-            'nivel_total': nivel_total,
+        return render(request, 'activities/resultado.html', {
+            'actividad': actividad,
+            'puntaje': puntaje
         })
 
-    except Exception as e:
-        logging.error(f"Error procesando resultados para usuario {request.user.email}: {e}")
-        if TopicResult.objects.filter(usuario=request.user).exists():
-            return redirect('resultados')
-        return redirect('evaluar')
-
-
-def determinar_nivel(puntaje):
-    if 0 <= puntaje < 2 :
-        return 'A1'
-    elif puntaje < 3:
-        return 'A2'
-    elif puntaje < 4:
-        return 'B1'
-    elif puntaje < 5:
-        return 'B2'
-    elif puntaje < 6:
-        return 'C1'
-    else:
-        return 'C2'
-
-
 @login_required
-def enviar_respuestas(request):
-    try:
-        if not request.session.get('respuestas'):
-            return redirect('evaluar.html')
+def guardar_puntaje(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
 
-        return redirect('resultados.html')
+        actividad_id = data.get('actividad_id')
+        respuesta_usuario = data.get('respuesta_usuario')
 
-    except Exception as e:
-        logging.error(f"Error en enviar_respuestas: {e}")
-        return redirect('resultados.html')
+        try:
+            actividad = Actividad.objects.get(id=actividad_id)
+
+            # Evaluamos y guardamos el puntaje
+            actividad.evaluar(respuesta_usuario)
+
+            # Actualizar resultado por tópico
+            subtopico = actividad.subtopico
+            topico = subtopico.topico
+            user = actividad.user
+
+            resultado, creado = ResultadoTopico.objects.get_or_create(
+                topico=topico,
+                user=user
+            )
+
+            actividades = Actividad.objects.filter(user=user, subtopico__topico=topico)
+
+            resultado.puntaje_total = sum(a.puntaje_total for a in actividades)
+            resultado.puntaje_obtenido = sum(a.puntaje_obtenido or 0 for a in actividades)
+            resultado.calcular_porcentaje()
+
+            return JsonResponse({
+                "status": "ok",
+                "puntaje_obtenido": actividad.puntaje_obtenido,
+                "puntaje_total": actividad.puntaje_total,
+                "porcentaje_topico": resultado.porcentaje
+            })
+
+        except Actividad.DoesNotExist:
+            return JsonResponse({"status": "error", "message": "Actividad no encontrada"}, status=404)

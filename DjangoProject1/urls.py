@@ -12,6 +12,8 @@ urlpatterns = [
 
     path('pdf/', include('pdf_generator.urls')),
 
+    path('prueba/', include('prueba.urls'))
+
 
 
 ]

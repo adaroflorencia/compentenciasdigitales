@@ -5,7 +5,8 @@
     <section class="section section-sm section-last bg-default bg-gray-4">
         <div class="results-section">
             <div class="container">
-                <div class="row justify-content-center py-4">
+            <h2 class="heading-3 m-5 text-center">Tu nivel de Competencias Digitales</h2>
+                <div class="row justify-content-center py-1">
                     <div class="col-md-10 col-lg-5 col-xl-6 text-center">
                         <div class="badge-container">
                             <div class="level-{{ total_level|lower }}">
@@ -17,15 +18,15 @@
                     </div>
 
                     <div class="col-md-10 col-lg-7 col-xl-6 px-2 ">
-                        <h2 class="heading-3 m-4 text-center">Tu nivel de Competencias Digitales</h2>
+
                         {% for topic_name, topic_data in results.items %}
-                            <div class="topic-container m-4">
-                                <div class="progress-linear progress-secondary level-{{ topic_data.level|lower }}">
+                            <div class="topic-container mx-4 mt-2">
+                                <div class="progress-linear  progress-secondary level-{{ topic_data.level|lower }}">
                                     <div class="progress-header">
                                         <div class="d-flex align-items-center">
-                                            <p class="progress-title">{{ topic_name }}</p>
+                                            <p class="progress-title ">{{ topic_name }}</p>
                                             <div class="badge-small-wrapper my-4 ms-4">
-                                                <span class="badge-small-text ">{{ topic_data.level }}</span>
+                                                <span class="badge-small-text">{{ topic_data.level }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -44,34 +45,36 @@
         </div>
 
         <!-- Botón para generar el PDF -->
-        <div class="d-flex justify-content-center mt-5">
-            <a href="{% url 'results' %}?format=pdf" class="button button-default-outline button-ujarak text-decoration-none btn-blue">
+        <div class="d-flex justify-content-center mt-4">
+            <a href="{% url 'results' %}?format=pdf"
+               class="button button-default-outline button-ujarak text-decoration-none btn-blue">
                 <i class="fas fa-file-pdf"></i> Descargar como PDF
             </a>
         </div>
 
     </section>
     <section class="quote-lisa" data-caption-animate="slideInUp" data-caption-delay="300">
-        <div class="level-description m-5">
-            <h3 class="heading-3 my-4 text-center">Descripción de Niveles</h3>
-            <ol class="list-marked">
-                <li class="my-3"><strong>A1-A2: Nivel inicial</strong>  - El usuario posee conocimientos básicos y limitados, con
+        <div class="level-description mx-5">
+            <h3 class="heading-3 my-1 text-center">Descripción de Niveles</h3>
+            <ol class="list-marked my-4">
+                <li class="my-3"><strong>A1-A2: Nivel inicial</strong> - El usuario posee conocimientos básicos y
+                    limitados, con
                     capacidad
                     para manejar situaciones cotidianas simples.
                 </li>
-                <li class="my-3"><strong>B1-B2: Nivel intermedio</strong>  - El usuario tiene un dominio más amplio y fluido del tema,
+                <li class="my-3"><strong>B1-B2: Nivel intermedio</strong> - El usuario tiene un dominio más amplio y
+                    fluido del tema,
                     pudiendo comprender y participar en conversaciones más complejas.
                 </li>
-                <li class="my-3"><strong>C1-C2: Nivel experto</strong> - El usuario tiene un dominio completo del tema, con
+                <li class="my-3"><strong>C1-C2: Nivel experto</strong> - El usuario tiene un dominio completo del tema,
+                    con
                     habilidades
                     para analizar y resolver problemas complejos de manera eficiente.
                 </li>
-
             </ol>
-
         </div>
-
-
     </section>
+
+
 
 {% endblock %}
