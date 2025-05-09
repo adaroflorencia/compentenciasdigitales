@@ -1,90 +1,55 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
-from .models import Actividad, ResultadoTopico, Subtopico
+from .models import Subtopico, Answer
 from django.contrib.auth.decorators import login_required
 import json
 
-def menu_activities(request):
-    return render(request, 'activities/menu_activities.html')
+def base_student(request):
+    return render(request, 'sections_student/base_student.html')
 
 def competencias(request):
-    actividad = Actividad.objects.first()
-    total_actividades = Actividad.objects.count()
-
-    return render(request, 'form/competencias.html', {
-        'actividad': actividad,
-        'total_actividades': total_actividades,
+    return render(request, 'sections_student/competencias.html', {
     })
 
+def informacion_datos(request):
+    return render(request, 'sections_student/informacion_datos.html')
 
-def obtener_actividad_aleatoria(request, subtopico_id=None):
-    if subtopico_id is None:
-        subtopico = Subtopico.objects.order_by('?').first()
-        if not subtopico:
-            return render(request, 'error.html', {'message': 'No hay subtópicos disponibles'})
-    else:
-        subtopico = get_object_or_404(Subtopico, id=subtopico_id)
-
-    actividad = Actividad.objects.filter(subtopico=subtopico).order_by('?').first()
-    if not actividad:
-        return render(request, 'error.html', {'message': 'No hay actividades disponibles'})
-
-    return render(request, 'activities/actividad.html', {
-        'actividad': actividad,
-        'subtopico': subtopico,
-        'total_actividades': Actividad.objects.filter(subtopico=subtopico).count()
-    })
-
-
-def evaluar_respuesta(request):
-    if request.method == 'POST':
-        actividad_id = request.POST.get('actividad_id')
-        respuesta_usuario = json.loads(request.POST.get('respuesta_usuario', '[]'))
-
-        actividad = get_object_or_404(Actividad, id=actividad_id)
-        puntaje = actividad.evaluar(respuesta_usuario)
-
-        return render(request, 'activities/resultado.html', {
-            'actividad': actividad,
-            'puntaje': puntaje
-        })
 
 @login_required
-def guardar_puntaje(request):
-    if request.method == 'POST':
+def guardar_respuesta(request):
+    try:
         data = json.loads(request.body)
 
-        actividad_id = data.get('actividad_id')
-        respuesta_usuario = data.get('respuesta_usuario')
+        activity_id = data.get('activity_id')
+        activity_type = data.get('activity_type')
+        user_response = data.get('user_response')
+        is_correct = data.get('is_correct')
+        subtopic_id = data.get('subtopic_id')
 
-        try:
-            actividad = Actividad.objects.get(id=actividad_id)
+        # Validación
+        if None in [activity_id, activity_type, user_response, is_correct, subtopic_id]:
+            return JsonResponse({'status': 'error', 'message': 'Datos incompletos'}, status=400)
 
-            # Evaluamos y guardamos el puntaje
-            actividad.evaluar(respuesta_usuario)
+        subtopic = Subtopico.objects.get(id=subtopic_id)
 
-            # Actualizar resultado por tópico
-            subtopico = actividad.subtopico
-            topico = subtopico.topico
-            user = actividad.user
+        session_id = request.session.session_key
+        if not session_id:
+            request.session.save()
+            session_id = request.session.session_key
 
-            resultado, creado = ResultadoTopico.objects.get_or_create(
-                topico=topico,
-                user=user
-            )
+        Answer.objects.create(
+            session_id=session_id,
+            activity_id=activity_id,
+            activity_type=activity_type,
+            user_response=user_response,
+            is_correct=is_correct,
+            subtopic=subtopic
+        )
 
-            actividades = Actividad.objects.filter(user=user, subtopico__topico=topico)
+        return JsonResponse({'status': 'ok'})
 
-            resultado.puntaje_total = sum(a.puntaje_total for a in actividades)
-            resultado.puntaje_obtenido = sum(a.puntaje_obtenido or 0 for a in actividades)
-            resultado.calcular_porcentaje()
+    except Subtopico.DoesNotExist:
+        return JsonResponse({'status': 'error', 'message': 'Subtópico no encontrado'}, status=404)
 
-            return JsonResponse({
-                "status": "ok",
-                "puntaje_obtenido": actividad.puntaje_obtenido,
-                "puntaje_total": actividad.puntaje_total,
-                "porcentaje_topico": resultado.porcentaje
-            })
-
-        except Actividad.DoesNotExist:
-            return JsonResponse({"status": "error", "message": "Actividad no encontrada"}, status=404)
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)

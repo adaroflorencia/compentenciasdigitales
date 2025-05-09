@@ -300,18 +300,14 @@ def results(request):
 
 
 def determine_level(percentage):
-    if 0 <= percentage <= 16.66:
+    if 0 <= percentage <= 25:
         return 'A1'
-    elif percentage <= 33.33:
-        return 'A2'
     elif percentage <= 50:
+        return 'A2'
+    elif percentage <= 75:
         return 'B1'
-    elif percentage <= 66.66:
-        return 'B2'
-    elif percentage <= 83.33:
-        return 'C1'
     else:
-        return 'C2'
+        return 'B2'
 
 
 @login_required

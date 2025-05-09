@@ -1,0 +1,462 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="section section-sm section-last bg-default bg-gray-4 ">
+    <div class="container pt-4">
+        <!-- Barra de progreso -->
+        <div class="progress " role="progressbar" aria-label="Progreso" aria-valuenow="{{ progress }}" aria-valuemin="0"
+            aria-valuemax="100">
+            <div class="progress-bar progress-bar-striped progress-bar-animated progress-color"></div>
+        </div>
+    </div>
+    <div class="container actividad" data-pregunta-id="1" data-respuesta="1,4" data-topic-id="6" data-subtopic-id="1">
+        <div class="card shadow-lg">
+            <div class="card-body px-5 py-4">
+                <h4 class="ps-4 pt-2 text-uppercase">Selecciona un motor de búsqueda</h4>
+                <h6 class="ps-4 pt-2">Haz click para seleccionar una imagen. Solo 2 imágenes son correctas.</h6>
+                <div class="row p-4 gap-3 d-flex justify-content-center pt-4">
+                    <!-- Imagen 1 -->
+                    <div class="col-3 d-flex justify-content-center">
+                        <div class="image-item shade p-3 w-50 seleccionable" data-id="0" data-opcion="false">
+                            <img src="{% static 'images/dropbox.png' %}" alt="Imagen 1">
+                            <div class="selection-overlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Imagen 2 (correcta) -->
+                    <div class="col-3 d-flex justify-content-center">
+                        <div class="image-item shade p-3 w-50 seleccionable" data-id="1" data-opcion="true">
+                            <img src="{% static 'images/google.png' %}" alt="Imagen 2">
+                            <div class="selection-overlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Imagen 3 -->
+                    <div class="col-3 d-flex justify-content-center">
+                        <div class="image-item shade p-3 w-50 seleccionable" data-id="2" data-opcion="false">
+                            <img src="{% static 'images/vscode.png' %}" alt="Imagen 3">
+                            <div class="selection-overlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Imagen 4 -->
+                    <div class="col-3 d-flex justify-content-center">
+                        <div class="image-item shade p-3 w-50 seleccionable" data-id="3" data-opcion="false">
+                            <img src="{% static 'images/linux.png' %}" alt="Imagen 4">
+                            <div class="selection-overlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Imagen 5 (correcta) -->
+                    <div class="col-3 d-flex justify-content-center">
+                        <div class="image-item shade p-3 w-50 seleccionable" data-id="4" data-opcion="true">
+                            <img src="{% static 'images/mozilla firefox.png' %}" alt="Imagen 5">
+                            <div class="selection-overlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Imagen 6 -->
+                    <div class="col-3 d-flex justify-content-center">
+                        <div class="image-item shade p-3 w-50 seleccionable" data-id="5" data-opcion="false">
+                            <img src="{% static 'images/drive.png' %}" alt="Imagen 6">
+                            <div class="selection-overlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Imagen 7 -->
+                    <div class="col-3 d-flex justify-content-center">
+                        <div class="image-item shade p-3 w-50 seleccionable" data-id="6" data-opcion="false">
+                            <img src="{% static 'images/nodejs.png' %}" alt="Imagen 7">
+                            <div class="selection-overlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Imagen 8 -->
+                    <div class="col-3 d-flex justify-content-center">
+                        <div class="image-item shade p-3 w-50 seleccionable" data-id="7" data-opcion="false">
+                            <img src="{% static 'images/slack.png' %}" alt="Imagen 8">
+                            <div class="selection-overlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Imagen 9 -->
+                    <div class="col-3 d-flex justify-content-center">
+                        <div class="image-item shade p-3 w-50 seleccionable" data-id="8" data-opcion="false">
+                            <img src="{% static 'images/whatsapp.png' %}" alt="Imagen 9">
+                            <div class="selection-overlay"></div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="selected_images" id="selected_images">
+                </div>
+                <div class="d-flex justify-content-end mt-4">
+                    {% if has_next %}
+                    <button type="submit" name="next"
+                        class="btn btn-blue mt-3 btn-same-width validar-imagenes">Siguiente</button>
+                    {% else %}
+                    <button type="submit" name="finish" class="btn btn-blue mt-3 btn-same-width validar-imagenes">Ver
+                        Resultados</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+
+    <div class="container pt-5 actividad" data-pregunta-id="2" data-respuesta="Jorge Luis Borges" data-topic-id="6"
+        data-subtopic-id="1">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">Nombra el autor de un texto</h3>
+                <h5 class="m-3">¿Qué Autor dijo la frase celebre "Siempre imaginé que el Paraíso sería algún tipo de
+                    biblioteca"?</h5>
+                <div class="row g-1 d-flex align-items-center">
+                    <div class="col-auto">
+                        <label for="respuesta" class="col-form-label m-3">
+                            <h6>Respuesta:</h6>
+                        </label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control respuesta-input" aria-describedby="passwordHelpInline">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="container pt-5 actividad" data-pregunta-id="3" data-topic-id="6" data-subtopic-id="1">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">Nombra un navegador y un motor de
+                    búsqueda</h3>
+                <div class="row g-2 d-flex align-items-center m-3">
+                    <div class="col-auto">
+                        <label for="respuesta" class="col-form-label">
+                            <h6>Navegador:</h6>
+                        </label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control respuesta-input" aria-describedby="passwordHelpInline"
+                            data-respuesta="Chrome,Firefox,Safari,Edge,Opera">
+                    </div>
+                </div>
+                <div class="row g-2 d-flex align-items-center m-3">
+                    <div class="col-auto">
+                        <label for="respuesta" class="col-form-label">
+                            <h6>Motor de búsqueda:</h6>
+                        </label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control respuesta-input" aria-describedby="passwordHelpInline"
+                            data-respuesta="Google,Bing,Yahoo,DuckDuckGo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="container pt-5 actividad" data-pregunta-id="4" data-topic-id="6" data-subtopic-id="1">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">Investigación</h3>
+                <h5 class="m-3">¿Qué estructura es la más alta y la más baja?</h5>
+                <h6 class="m-3">Entre las opciones: Torre Eiffel - Burj
+                    Khalifa - Obelisco</h6>
+                <div class="row g-2 d-flex align-items-center m-3">
+                    <div class="col-auto">
+                        <label for="respuesta" class="col-form-label">
+                            <h6>La más alta:</h6>
+                        </label>
+                    </div>
+                    <div class="col-auto">
+                        <select class="form-select" aria-label="Default select example" data-respuesta="2">
+                            <option selected>Selecciona</option>
+                            <option value="1">Torre Eiffel</option>
+                            <option value="2">Burj Khalifa</option>
+                            <option value="3">Obelisco</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row g-2 d-flex align-items-center m-3">
+                    <div class="col-auto">
+                        <label for="respuesta" class="col-form-label">
+                            <h6>La más baja:</h6>
+                        </label>
+                    </div>
+                    <div class="col-auto">
+                        <select class="form-select" aria-label="Default select example" data-respuesta="3">
+                            <option selected>Selecciona</option>
+                            <option value="1">Torre Eiffel</option>
+                            <option value="2">Burj Khalifa</option>
+                            <option value="3">Obelisco</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="container pt-5 actividad" data-pregunta-id="5" data-topic-id="6" data-subtopic-id="1">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">Enlaces de búsqueda</h3>
+                <h5 class="m-3">Detecta que sección se especifica un acuerdo comercial.</h5>
+                <img src="{% static 'images/acuerdo_comercial.png' %}" alt="Computadora"
+                    class="rounded mx-auto d-block">
+                <div class="row g-2 d-flex align-items-center m-3">
+                    <div class="col-auto">
+                        <label for="respuesta" class="col-form-label">
+                            <h6>Respuesta:</h6>
+                        </label>
+                    </div>
+                    <div class="col-auto">
+                        <select class="form-select" aria-label="Default select example" data-respuesta="1">
+                            <option selected>Selecciona</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row g-2 d-flex align-items-center m-3">
+                    <div class="col-auto">
+                        <label for="respuesta" class="col-form-label">
+                            <h6>Respuesta:</h6>
+                        </label>
+                    </div>
+                    <div class="col-auto">
+                        <select class="form-select" aria-label="Default select example" data-respuesta="3">
+                            <option selected>Selecciona</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="container pt-5 actividad" data-pregunta-id="6" data-topic-id="6" data-subtopic-id="1">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">Encuentra la imagen original</h3>
+                <h5 class="m-3">Manuel creó un fotomontaje para engañar y divertir a sus compañeros de clase.</h5>
+                <h5 class="m-3">Cambió un elemento en una fotografía de Neil Armstrong caminando en la Luna.</h5>
+                <h6 class="m-3">Cual ?</h6>
+                <img src="{% static 'images/moon.jpg' %}" alt="Neil Armstrong" class="rounded mx-auto d-block">
+                <div class="row g-2 d-flex align-items-center m-3">
+                    <div class="col-auto">
+                        <label for="respuesta" class="col-form-label">
+                            <h6>Manuel editó:</h6>
+                        </label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" id="respuesta" class="form-control" aria-describedby="passwordHelpInline"
+                            data-respuesta="bandera">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="container pt-5 actividad" data-pregunta-id="7" data-topic-id="6" data-subtopic-id="1">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">¿Quién escribió el artículo a
+                    continuación?</h3>
+                <h5 class="m-3">Tres amigos leyeron algo de información en internet.</h5>
+                <h5 class="m-3">Esta información es verdadera..</h5>
+                <h5 class="m-3">¿Quién tiene el mejor argumento?</h5>
+
+                <img src="{% static 'images/avatar.png' %}" alt="Articulo Periodistico" class="rounded mx-auto d-block">
+                <div class="row g-2 d-flex align-items-center m-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1"
+                            data-respuesta="false">
+                        <label class="form-check-label" for="radioDefault1">
+                            Sofía
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2"
+                            data-respuesta="false">
+                        <label class="form-check-label" for="radioDefault2">
+                            Jesús
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2"
+                            data-respuesta="true">
+                        <label class="form-check-label" for="radioDefault2">
+                            Marta
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="container pt-5 actividad" data-pregunta-id="8" data-topic-id="6" data-subtopic-id="1">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">¿Qué es la infodemia?</h3>
+                <h6 class="m-3">Opciones : </h6>
+                <div class="row g-2 d-flex align-items-center m-3">
+                    <div class="col-auto">
+                        <select class="form-select" aria-label="Default select example" data-respuesta="1">
+                            <option selected>Selecciona</option>
+                            <option value="1">Es la replicación masiva de noticias e informaciones reales o
+                                falsas.
+                            </option>
+                            <option value="2">Es una enfermedad causada por exceso de información digital.</option>
+                            <option value="3">Es una red social creada para difundir noticias falsas.</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="container pt-5 actividad" data-pregunta-id="9" data-topic-id="6" data-subtopic-id="1">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">¿Cuáles de las siguientes prácticas ayudan a
+                    mejorar una búsqueda en Internet?</h3>
+
+                <div class="row g-2 d-flex align-items-center m-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1"
+                            data-respuesta="true">
+                        <label class="form-check-label" for="radioDefault1">
+                            Usar palabras clave específicas
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2"
+                            data-respuesta="false">
+                        <label class="form-check-label" for="radioDefault2">
+                            Escribir frases largas sin sentido
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2"
+                            data-respuesta="true">
+                        <label class="form-check-label" for="radioDefault2">
+                            Usar comillas para buscar una frase exacta
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2"
+                            data-respuesta="false">
+                        <label class="form-check-label" for="radioDefault2">
+                            Evitar usar sinónimos
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="container pt-5 actividad" data-pregunta-id="10" data-topic-id="6" data-subtopic-id="1">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">¿Colocar una palabra entre comillas en un
+                    buscador, ayuda a encontrar resultados exactos?</h3>
+
+                <div class="row g-2 d-flex align-items-center m-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault1"
+                            data-respuesta="true">
+                        <label class="form-check-label" for="radioDefault1">
+                            Verdadero
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2"
+                            data-respuesta="false">
+                        <label class="form-check-label" for="radioDefault2">
+                            Falso
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="container pt-5 actividad" data-pregunta-id="11" data-topic-id="6" data-subtopic-id="1">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">Arrastrar y soltar</h3>
+                <h6 class="m-3">Ordena los pasos para hacer una búsqueda efectiva en Internet</h6>
+                <div class="row g-2 d-flex align-items-center m-3">
+                    <div>
+                        <ul id="stepsContainer" class="list-unstyled" data-respuesta="1,2,3,4">
+                            <li class="step" draggable="true" data-index="2">Seleccionar palabras claves</li>
+                            <li class="step" draggable="true" data-index="1">Identificar el objetivo de la
+                                búsqueda
+                            </li>
+                            <li class="step" draggable="true" data-index="4">Navegar y consultar varios resultados
+                                de búsqueda
+                            </li>
+                            <li class="step" draggable="true" data-index="3">Escoger un navegador y un buscador</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <hr>
+    <div class="container pt-5 actividad" data-pregunta-id="12" data-topic-id="6" data-subtopic-id="1">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">Respuesta Corta</h3>
+                <h5 class="m-3">¿Qué operador se usa para excluir una palabra de los resultados de búsqueda en
+                    Google?</h5>
+                <div class="row g-2 d-flex align-items-center m-3">
+                    <div class="col-auto">
+                        <label for="respuesta" class="col-form-label">
+                            <h6>Respuesta:</h6>
+                        </label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control respuesta-input" aria-describedby="passwordHelpInline"
+                            data-respuesta="-">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="container pt-5 actividad" data-pregunta-id="13" data-topic-id="6" data-subtopic-id="1">
+        <div class="card shadow-lg">
+            <div class="card-body">
+                <h3 class="heading-3 px-4 pt-2 text-center mx-5 my-4">Completar espacios en blanco</h3>
+                <h5 class="m-3">¿Qué operador se usa para excluir una palabra de los resultados de búsqueda en
+                    Google?</h5>
+                <div class="row g-2 d-flex align-items-center m-3">
+                    <div class="col-sm-8">
+                        <p>Para buscar una frase exacta en Google, se debe escribir la frase entre <span class="blank"
+                                data-respuesta="comillas"></span>. </p>
+                        <p>Si se desea excluir una palabra de la búsqueda, se usa el símbolo <span class="blank"
+                                data-respuesta="-"></span>antes
+                            de esa palabra.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+{% block extra_scripts %}
+<script src="{% static 'js/activity.js' %}"></script>
+<script src="{% static 'js/activity-navigation.js' %}"></script>
+{% endblock %}
+{% endblock %}

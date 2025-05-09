@@ -1479,7 +1479,11 @@ img {
 }
 
 .bg-gray-4 {
-    background-color: #f7f7f7
+    background-color: #f7f7f7;
+}
+
+.bg-gray-5 {
+    background-color: #E85D75 !important;
 }
 
 [class*=bg-] {

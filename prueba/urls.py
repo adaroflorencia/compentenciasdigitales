@@ -4,8 +4,10 @@ from . import views
 urlpatterns = [
     path('competencias/', views.competencias, name='competencias'),
 
-    path('activities/', views.obtener_actividad_aleatoria, name='obtener_actividad_aleatoria'),
+    path('base_student/', views.base_student, name= 'base_student'),
 
-    path('menu_activities/', views.menu_activities, name= 'menu_activities')
+    path('sections_student/', views.informacion_datos, name='informacion_datos'),
+
+    path('guardar-respuesta/', views.guardar_respuesta, name='guardar_respuesta'),
 
 ]
