@@ -1,33 +1,43 @@
 {% load static %}
-<section class="section section-sm bg-gray-5">
+<section class="section section-sm">
     <div class="container">
-        <h3 class="text-uppercase text-center">Tus beneficios</h3>
+        <h3 class="text-uppercase text-center">El camino a recorrer</h3>
         <div class="row row-30">
             <div class="col-sm-6 col-lg-4">
                 <article class="box-icon-classic h-100">
                     <div class="unit box-icon-classic-body flex-column text-center">
-                        <div class="">
-                            <div class="box-icon-classic-icon fl-bigmug-line-circular220"></div>
+                        <!-- Contenedor flex que centra todo -->
+                        <div class="d-flex justify-content-center">
+                            <div class="w-75">
+                                <img src="{% static 'images/autodiagnostico.png' %}" alt="Autodiagnóstico"
+                                    class="img-fluid">
+                            </div>
                         </div>
                         <div class="h-100">
-                            <h5 class="text-uppercase box-icon-classic-title">Reconocimiento institucional</h5>
-                            <p class=" box-icon-classic-text mx-2">Fortalece tu identidad digital profesional y valida
-                                tus competencias con criterios internacionales.</p>
+                            <h5 class="text-uppercase box-icon-classic-title">Autodiagnóstico</h5>
+                            <p class="box-icon-classic-text mx-2">
+                                Identifica tus fortalezas y debilidades en relación con tus competencias digitales.
+                            </p>
                         </div>
                     </div>
                 </article>
+
             </div>
             <div class="col-sm-6 col-lg-4">
                 <article class="box-icon-classic h-100">
                     <div class="unit box-icon-classic-body flex-column text-center">
-                        <div class="">
-                            <div class="box-icon-classic-icon fl-bigmug-line-favourites5"></div>
+                        <!-- Contenedor flex que centra todo -->
+                        <div class="d-flex justify-content-center">
+                            <div class="w-75">
+                                <img src="{% static 'images/autodiagnostico.png' %}" alt="Autodiagnóstico"
+                                    class="img-fluid">
+                            </div>
                         </div>
-                        <div class="">
-                            <h5 class="text-uppercase box-icon-classic-title">Identifica tus fortalezas</h5>
-                            <p class=" box-icon-classic-text mx-2">Descubre en qué áreas digitales destacas y cómo
-                                puedes
-                                aprovechar tus competencias en tu labor.</p>
+                        <div class="h-100">
+                            <h5 class="text-uppercase box-icon-classic-title">Evaluación</h5>
+                            <p class="box-icon-classic-text mx-2">
+                                Valida tus competencias con criterios internacionales.
+                            </p>
                         </div>
                     </div>
                 </article>
@@ -36,13 +46,18 @@
             <div class="col-sm-6 col-lg-4">
                 <article class="box-icon-classic h-100">
                     <div class="unit box-icon-classic-body flex-column text-center">
-                        <div class="">
-                            <div class="box-icon-classic-icon fl-bigmug-line-flag53"></div>
+                        <!-- Contenedor flex que centra todo -->
+                        <div class="d-flex justify-content-center">
+                            <div class="w-75">
+                                <img src="{% static 'images/UNCUYO-INSIGNIA-DigComp_Macro.png' %}" alt="Autodiagnóstico"
+                                    class="img-fluid">
+                            </div>
                         </div>
-                        <div class="text-center">
-                            <h5 class="text-uppercase box-icon-classic-title px-4">Planea tu desarrollo</h5>
-                            <p class="box-icon-classic-text mx-2">Obtén recomendaciones personalizadas para mejorar tus
-                                habilidades digitales y alcanzar tu máximo potencial.</p>
+                        <div class="h-100">
+                            <h5 class="text-uppercase box-icon-classic-title">Credencial</h5>
+                            <p class="box-icon-classic-text mx-2">
+                                Valida tus competencias con criterios internacionales.
+                            </p>
                         </div>
                     </div>
                 </article>
@@ -50,4 +65,29 @@
         </div>
     </div>
 
+</section>
+
+<section class="section text-center">
+    <div class="parallax-container" data-parallax-img="{% static 'images/slider-4-slide-1-1920x678.jpg' %}">
+        <div class="parallax-content section-xl section-inset-custom-1 context-dark bg-overlay-2-21">
+            <div class="container mt-4">
+                <h2 class="heading-2 oh font-weight-normal wow slideInDown"><span
+                        class="d-block font-weight-semi-bold">¿Listo para descubrir tu nivel digital?</span></h2>
+                <p class="text-width-medium text-spacing-75 wow fadeInLeft" data-wow-delay=".1s">
+                    Realizá nuestro autodiagnóstico interactivo y conocé tus fortalezas en competencias digitales. <br>
+                    Evaluaremos tus habilidades en cinco áreas clave. <strong>¡Solo te llevará 10 minutos!</strong>
+                </p>
+                {% if user.is_authenticated %}
+                <a class="button button-secondary button-pipaluk text-decoration-none"
+                    href="{% url 'estudiantes' %}">Empezar</a>
+                {% else %}
+                <p class="text-width-medium text-spacing-75 wow fadeInLeft" data-wow-delay=".1s">
+                    Para acceder a esta función, inicia sesión.
+                </p>
+                <a class="button button-secondary button-pipaluk text-decoration-none"
+                    href="{% url 'login' %}?next={% url 'estudiantes' %}">Iniciar sesión</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </section>

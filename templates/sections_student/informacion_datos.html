@@ -1,134 +1,238 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<section class="section swiper-container swiper-slider swiper-slider-corporate swiper-pagination-style-2"
-    data-loop="false" data-autoplay="5000" data-simulate-touch="true" data-nav="false" data-direction="vertical">
-    <div class="swiper-wrapper text-left">
-        <div class="swiper-slide context-dark" data-slide-bg="{% static 'images/slider-4-slide-1-1920x678.jpg' %}">
-            <div class="swiper-slide-caption section-md">
-                <div class="container">
-                    <div class="mt-4">
-                        <h2 class="oh font-weight-light" data-caption-animate="slideInUp" data-caption-delay="0"
-                            data-swiper-animate-restart="true">
-                            <span class="font-weight-bold">Alfabetización en información y datos</span>
-                        </h2>
+    <section class="section swiper-container swiper-slider swiper-slider-corporate swiper-pagination-style-2"
+             data-loop="false" data-autoplay="5000" data-simulate-touch="true" data-nav="false"
+             data-direction="vertical">
+        <div class="swiper-wrapper text-left">
+            <div class="swiper-slide context-dark" data-slide-bg="{% static 'images/slider-4-slide-1-1920x678.jpg' %}">
+                <div class="swiper-slide-caption section-md">
+                    <div class="container">
+                        <div class="mt-4">
+                            <h2 class="oh font-weight-light" data-caption-animate="slideInUp" data-caption-delay="0"
+                                data-swiper-animate-restart="true">
+                                <span class="font-weight-bold">Alfabetización en información y datos</span>
+                            </h2>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="section section-sm section-first bg-default text-md-left">
-    <div class="container">
-        <div class="row row-50 align-items-center justify-content-between justify-content-xl-between">
-            <div class="col-lg-6 wow">
-                <div class="container">
-                    <h4 class="text-uppercase my-3 text-center">¿Por qué es importante esta competencia digital?</h4>
-                    <p class="mt-4 text-justify">En este modulo aprenderás a Identificar, localizar, obtener,
-                        almacenar,
-                        organizar y analizar información, datos y contenidos digitales, evaluando su finalidad y
-                        relevancia
-                        para tus actividades personales y académicas.</p>
+    <section class="section section-sm section-first bg-default text-md-left ">
+        <div class="container">
+            <div class="row row-50 align-items-center justify-content-between justify-content-xl-between">
+                <div class="col-lg-6 wow">
+                    <div class="container">
+                        <h4 class="text-uppercase my-3 text-center">¿Por qué es importante esta competencia
+                            digital?</h4>
+                        <p class="mt-4 text-justify">En este modulo aprenderás a Identificar, localizar, obtener,
+                            almacenar,
+                            organizar y analizar información, datos y contenidos digitales, evaluando su finalidad y
+                            relevancia
+                            para tus actividades personales y académicas.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center wow fadeInUp"><img
+                        src="{% static 'images/UNCUYO-INSIGNIA-DigComp_area-1 (1).png' %}" alt="" width="300"/>
                 </div>
             </div>
-            <div class="col-lg-6 text-center wow fadeInUp"><img
-                    src="{% static 'images/UNCUYO-INSIGNIA-DigComp_area-1 (1).png' %}" alt="" width="300" />
-            </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="section p-3">
-    <div class="mx-5 pb-5">
-        <div class="row row-cols-1 row-cols-md-5 row-gap-4">
-            <div class="col">
-                <a class="card1 h-100 w-100" href="{% url 'competencias' %}">
-                    <h4 class="text-center box-icon-classic-title">Búsqueda y gestión de información y datos</h4>
-                    <p class="small pt-2 box-icon-classic-text">Navegar, buscar y filtrar datos, información y
-                        contenidos digitales.</p>
-                    <div class="go-corner" href="#">
-                        <div class="go-arrow">
-                            →
+    <section class="section py-4 px-3 bg-gray-4">
+        <div class="mx-5 pb-5">
+            <div class="row row-cols-1 row-cols-md-2">
+                <!-- Parte izquierda: Cards -->
+                <div class="col">
+                    <div class="row row-cols-1 row-cols-md-2 g-4">
+                        <div class="col">
+                            <a class="card1 h-100 w-100" href="{% url 'competencias' %}">
+                                <h6 class="text-center fw-bold">Básico</h6>
+                                <h4 class="text-center box-icon-classic-title pt-2">Búsqueda y gestión de información y
+                                    datos</h4>
+                                <p class="small pt-2 box-icon-classic-text text-justify"> Navegar, buscar y filtrar datos,
+                                    información y contenidos digitales.</p>
+                                <div class="go-corner" href="#">
+                                    <div class="go-arrow">→</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a class="card1 h-100 w-100" href="#">
+                                <h6 class="text-center pb-2 fw-bold">Intermedio</h6>
+                                <h4 class="text-center box-icon-classic-title">Búsqueda y gestión de información y
+                                    datos</h4>
+                                <p class="small pt-2 box-icon-classic-text text-justify"> Navegar, buscar y filtrar
+                                    datos, información y contenidos digitales</p>
+                                <div class="go-corner" href="#">
+                                    <div class="go-arrow">→</div>
+                                </div>
+                            </a>
                         </div>
                     </div>
-                </a>
-            </div>
-            <div class="col">
-                <a class="card1 h-100 w-100" href="#">
-                    <h4 class="text-center box-icon-classic-title">Búsqueda y gestión de información y datos</h4>
-                    <p class="small pt-2 box-icon-classic-text"> Evaluar datos, información y contenidos digitales.</p>
-                    <div class="go-corner" href="#">
-                        <div class="go-arrow">
-                            →
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col">
-                <a class="card1 h-100 w-100" href="#">
-                    <h4 class="text-center box-icon-classic-title">Búsqueda y gestión de información y datos</h4>
-                    <p class="small pt-2 box-icon-classic-text">Gestionar datos, información y contenidos digitales.</p>
-                    <div class="go-corner" href="#">
-                        <div class="go-arrow">
-                            →
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="section section-sm section-first bg-default text-md-left bg-gray-4">
-    <div class="container p-4">
-        <div class="row row-50 align-items-center justify-content-center justify-content-xl-between">
-            <div class="col-lg-6 text-center wow fadeInUp"><img
-                    src="{% static 'images/UNCUYO-INSIGNIA-DigComp-Mapa_AREA1.png' %}" alt="" width="600" />
-            </div>
-            <div class="col-lg-6 wow">
-                <div class="mb-4 ms-4">
-                    <h4 class="text-uppercase mt-4 text-center">Cultiva tus habilidades</h4>
-                    <p class="mt-4 text-justify">Aquí tienes una sección de tutoriales que pueden ayudar comprender
-                        esta
-                        competencia.</p>
                 </div>
-                <div class="mb-4 ms-4">
-                    <h6 class="text-uppercase"> Básico</h6>
-                    <ul class="list-marked">
-                        <li><a class="text-decoration-none dark-link pt-4"
-                                href="https://ead.uncu.edu.ar/mod/book/view.php?id=15832&chapterid=2028">Navegar,
+
+                <!-- Parte derecha: Material de apoyo -->
+                <div class="col d-flex flex-column justify-content-start">
+                    <h4 class="text-center">Material de apoyo</h4>
+                    <!-- Aquí podés colocar un enlace, lista, íconos, PDF, etc. -->
+                    <p class="text-center my-4 ms-4">Aquí encontrarás recursos adicionales para complementar tu
+                        aprendizaje.</p>
+                    <!-- Ejemplo de enlace -->
+                    <div class="mb-4 ms-4 ps-5">
+                        <h6 class="text-uppercase">Básico</h6>
+                        <ul class="list-marked">
+                            <li><a class="text-decoration-none dark-link pt-4 text-start"
+                                   href="https://ead.uncu.edu.ar/mod/book/view.php?id=15832&chapterid=2028" target="_blank" rel="noopener noreferrer">Navegar,
+                                buscar y filtrar datos, información y contenidos digitales</a></li>
+                        </ul>
+                    </div>
+                    <div class="mb-4 ms-4 ps-5">
+                        <h6 class="text-uppercase">Intermedio</h6>
+                        <ul class="list-marked">
+                            <li><a class="text-decoration-none dark-link pt-4"
+                                   href="https://ead.uncu.edu.ar/mod/book/view.php?id=15832&chapterid=2030" target="_blank" rel="noopener noreferrer">Navegar,
                                 buscar y
                                 filtrar datos, información y contenidos digitales</a></li>
-                        <li><a class="text-decoration-none dark-link pt-4"
-                                href="https://ead.uncu.edu.ar/mod/book/view.php?id=15832&chapterid=2036">Evaluar
-                                datos, información y contenidos digitales.</a></li>
-                        <li><a class="text-decoration-none dark-link pt-4"
-                                href="https://ead.uncu.edu.ar/mod/book/view.php?id=15832&chapterid=2039">Gestionar
-                                datos, información y contenidos digitales.</a></li>
-                    </ul>
-                </div>
-                <div class="mb-4 ms-4">
-                    <h6 class="text-uppercase">Intermedio</h6>
-                    <ul class="list-marked">
-                        <li><a class="text-decoration-none dark-link pt-4"
-                                href="https://ead.uncu.edu.ar/mod/book/view.php?id=15832&chapterid=2030">Navegar,
-                                buscar y
-                                filtrar datos, información y contenidos digitales</a></li>
-                        <li><a class="text-decoration-none dark-link pt-4"
-                                href="https://ead.uncu.edu.ar/mod/book/view.php?id=15832&chapterid=2037">Evaluar
-                                datos, información y contenidos digitales.</a></li>
-                        <li><a class="text-decoration-none dark-link pt-4"
-                                href="https://ead.uncu.edu.ar/mod/book/view.php?id=15832&chapterid=2040">Gestionar
-                                datos, información y contenidos digitales.</a></li>
-                    </ul>
+                        </ul>
+                    </div>
                 </div>
             </div>
-
         </div>
-    </div>
-</section>
-{% block extra_scripts %}
-<script src="{% static 'js/activity.js' %}"></script>
-{% endblock %}
+        <hr class="py-4">
+        <div class="mx-5 pb-5">
+            <div class="row row-cols-1 row-cols-md-2">
+                <!-- Parte izquierda: Cards -->
+                <div class="col">
+                    <div class="row row-cols-1 row-cols-md-2 g-4">
+                        <div class="col">
+                            <a class="card1 h-100 w-100" href="{% url 'competencias' %}">
+                                <h6 class="text-center fw-bold">Básico</h6>
+                                <h4 class="text-center box-icon-classic-title pt-2">Búsqueda y gestión de información y
+                                    datos</h4>
+                                <p class="small pt-2 box-icon-classic-text text-justify">Evaluar datos, información y contenidos digitales.</p>
+                                <div class="go-corner" href="#">
+                                    <div class="go-arrow">→</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a class="card1 h-100 w-100" href="#">
+                                <h6 class="text-center pb-2 fw-bold">Intermedio</h6>
+                                <h4 class="text-center box-icon-classic-title">Búsqueda y gestión de información y
+                                    datos</h4>
+                                <p class="small pt-2">Evaluar datos, información y contenidos digitales.</p>
+                                <div class="go-corner" href="#">
+                                    <div class="go-arrow">→</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Parte derecha: Material de apoyo -->
+                <div class="col d-flex flex-column justify-content-start">
+                    <h4 class="text-center">Material de apoyo</h4>
+                    <!-- Aquí podés colocar un enlace, lista, íconos, PDF, etc. -->
+                    <p class="text-center my-4 ms-4">Aquí encontrarás recursos adicionales para complementar tu
+                        aprendizaje.</p>
+                    <!-- Ejemplo de enlace -->
+                    <div class="mb-4 ms-4 ps-5">
+                        <h6 class="text-uppercase">Básico</h6>
+                        <ul class="list-marked">
+                            <li><a class="text-decoration-none dark-link pt-4 text-justify"
+                                   href="https://ead.uncu.edu.ar/mod/book/view.php?id=15832&chapterid=2036" target="_blank" rel="noopener noreferrer">Evaluar
+                                datos, información y contenidos digitales.</a></li>
+                        </ul>
+                    </div>
+                    <div class="mb-4 ms-4 ps-5">
+                        <h6 class="text-uppercase">Intermedio</h6>
+                        <ul class="list-marked">
+                            <li><a class="text-decoration-none dark-link pt-4"
+                                   href="https://ead.uncu.edu.ar/mod/book/view.php?id=15832&chapterid=2037" target="_blank" rel="noopener noreferrer">Evaluar
+                                datos, información y contenidos digitales.</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="py-4">
+        <div class="mx-5 pb-5">
+            <div class="row row-cols-1 row-cols-md-2">
+                <!-- Parte izquierda: Cards -->
+                <div class="col">
+                    <div class="row row-cols-1 row-cols-md-2 g-4">
+                        <div class="col">
+                            <a class="card1 h-100 w-100" href="{% url 'competencias' %}">
+                                <h6 class="text-center fw-bold">Básico</h6>
+                                <h4 class="text-center box-icon-classic-title pt-2">Búsqueda y gestión de información y
+                                    datos</h4>
+                                <p class="small pt-2 box-icon-classic-text text-justify">Gestionar datos, información y contenidos digitales.</p>
+                                <div class="go-corner" href="#">
+                                    <div class="go-arrow">→</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a class="card1 h-100 w-100" href="#">
+                                <h6 class="text-center pb-2 fw-bold">Intermedio</h6>
+                                <h4 class="text-center box-icon-classic-title">Búsqueda y gestión de información y
+                                    datos</h4>
+                                <p class="small pt-2 box-icon-classic-text text-justify">Gestionar datos, información y contenidos digitales.</p>
+                                <div class="go-corner" href="#">
+                                    <div class="go-arrow">→</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Parte derecha: Material de apoyo -->
+                <div class="col d-flex flex-column justify-content-start">
+                    <h4 class="text-center">Material de apoyo</h4>
+                    <!-- Aquí podés colocar un enlace, lista, íconos, PDF, etc. -->
+                    <p class="text-center my-4 ms-4">Aquí encontrarás recursos adicionales para complementar tu
+                        aprendizaje.</p>
+                    <!-- Ejemplo de enlace -->
+                    <div class="mb-4 ms-4 ps-5">
+                        <h6 class="text-uppercase">Básico</h6>
+                        <ul class="list-marked">
+                            <li><a class="text-decoration-none dark-link pt-4 text-justify"
+                                   href="https://ead.uncu.edu.ar/mod/book/view.php?id=15832&chapterid=2039" target="_blank" rel="noopener noreferrer">Gestionar
+                                datos, información y contenidos digitales.</a></li>
+                        </ul>
+                    </div>
+                    <div class="mb-4 ms-4 ps-5">
+                        <h6 class="text-uppercase">Intermedio</h6>
+                        <ul class="list-marked">
+                            <li><a class="text-decoration-none dark-link pt-4"
+                                   href="https://ead.uncu.edu.ar/mod/book/view.php?id=15832&chapterid=2040" target="_blank" rel="noopener noreferrer">Gestionar
+                                datos, información y contenidos digitales.</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <section class="section section-sm section-first bg-default text-md-left ">
+        <div class="container">
+            <h3 class="text-uppercase text-center pb-2">Ruta de aprendizaje</h3>
+            <div class="d-flex justify-content-center">
+                <div class="col-lg-6 text-center wow fadeInUp"><img
+                        src="{% static 'images/UNCUYO-INSIGNIA-DigComp-Mapa_AREA1.png' %}" alt="" width="600"/>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    {% block extra_scripts %}
+        <script src="{% static 'js/activity.js' %}"></script>
+    {% endblock %}
 {% endblock %}

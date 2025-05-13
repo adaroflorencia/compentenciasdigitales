@@ -5,52 +5,84 @@
             <div class="box-categories-content">
                 <div class="container">
                     <h3 class="text-uppercase text-center pt-5">Presentación</h3>
+
                     <p class="mt-4 text-justify">
-                        Esta propuesta está alineada con el <strong>Marco Europeo de Competencia Digital
-                            (DIGCOMP)</strong>, lo que garantiza que las habilidades adquiridas son reconocidas
-                        internacionalmente y te permitirán obtener acreditaciones, validando tus logros de forma
-                        portable y verificable.
+                        Uno de los elementos distintivos de este proceso es la posibilidad de obtener credenciales
+                        digitales verificables (<strong>Open Badges</strong>). Estas insignias certifican cada una de
+                        las competencias
+                        alcanzadas y te acompañan a lo largo de tu trayectoria educativa y profesional, ya que son
+                        portables, interoperables y compartibles en tu currículum digital, redes sociales o plataformas
+                        académicas
                     </p>
+
                     <p class="mt-4 text-justify">
-                        Al comienzo, harás un DIAGNÓSTICO INICIAL para identificar tus conocimientos actuales, y al
-                        finalizar cada módulo, tendrás la oportunidad de obtener acreditaciones digitales que validan lo
-                        aprendido. Estas acreditaciones se entregan en forma de <strong>insignias
-                            digitales (Open Badges)</strong> que podés agregar a tu currículum, compartir en redes
-                        sociales o presentar en futuras oportunidades académicas y laborales.
+                        El curso se desarrolla en modalidad autoasistida y asincrónica. Esto significa que podrás
+                        avanzar a tu ritmo y con flexibilidad horaria. El itinerario comienza con un diagnóstico
+                        inicial, que te permitirá reconocer tu nivel de partida. Luego, cada módulo incluirá
+                        recursos didácticos accesibles (textos, videos, actividades prácticas) y finalizará con una
+                        instancia de evaluación. Si cumplís con los criterios definidos, recibirás tu acreditación
+                        digital correspondiente a la subcompetencia trabajada.
                     </p>
-                    <p class="mt-4 text-justify"> Para realizar el diagnóstico principal, es necesario que selecciones
-                        el perfil que mejor se adecue a tu situación o preferencia. Encontrarás esta opción a
-                        continuación.</p>
+                    <p class="mt-4 text-justify">Te invitamos a iniciar este recorrido con compromiso y entusiasmo. Cada
+                        paso que des te acercará
+                        a una acreditación significativa, reconocida y útil para tu futuro académico y profesional.</p>
+
                     <h5 class="text-center mt-4 text-blue">¡Comencemos!</h5>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-md-4 wow fadeInDown col-9" data-wow-delay=".2s">
-                        <ul class="list-marked-2 box-categories-list">
-                            <li><a href="{% url 'docentes' %}"><img src="{% static 'images/teachers.jpg' %}" alt=""
-                                        width="368" height="420" /></a>
-                                <h5 class="box-categories-title" id="docentes">Docentes</h5>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-4 wow fadeInDown col-9" data-wow-delay=".2s">
-                        <ul class="list-marked-2 box-categories-list">
-                            <li><a href="{% url 'estudiantes' %}"><img src="{% static 'images/students.jpg' %}" alt=""
-                                        width="368" height="420" /></a>
-                                <h5 class="box-categories-title">Estudiantes</h5>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-4 wow fadeInDown col-9" data-wow-delay=".2s">
-                        <ul class="list-marked-2 box-categories-list">
-                            <li><a href="{% url 'no_docentes' %}"><img
-                                        src="{% static 'images/non-teaching staff.jpg' %}" alt="" width="368"
-                                        height="420" /></a>
-                                <h5 class="box-categories-title">No Docentes</h5>
-                            </li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<section class="section">
+    <div class="container offset-negative-1">
+        <div class="box-categories-content">
+            <div class="container my-4">
+                <h4 class="text-uppercase text-center pt-5 ">¿Por qué es importante la formación y la certificación
+                    de las competencias digitales ?</h4>
+                <div class="mx-auto d-flex justify-content-center pt-4">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/sopnz5_CgrE?si=zqj9ZDyngVp1qaCR"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!--
+<div class="container">
+
+    <div class="row justify-content-center">
+        <div class="col-md-4 wow fadeInDown col-9" data-wow-delay=".2s">
+            <ul class="list-marked-2 box-categories-list">
+                <li><a href="{% url 'docentes' %}"><img src="{% static 'images/teachers.jpg' %}" alt="" width="368"
+                            height="420" /></a>
+                    <h5 class="box-categories-title" id="docentes">Docentes</h5>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-4 wow fadeInDown col-9" data-wow-delay=".2s">
+            <ul class="list-marked-2 box-categories-list">
+                <li><a href="{% url 'estudiantes' %}"><img src="{% static 'images/students.jpg' %}" alt="" width="368"
+                            height="420" /></a>
+                    <h5 class="box-categories-title">Estudiantes</h5>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-4 wow fadeInDown col-9" data-wow-delay=".2s">
+            <ul class="list-marked-2 box-categories-list">
+                <li><a href="{% url 'no_docentes' %}"><img src="{% static 'images/non-teaching staff.jpg' %}" alt=""
+                            width="368" height="420" /></a>
+                    <h5 class="box-categories-title">No Docentes</h5>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+-->

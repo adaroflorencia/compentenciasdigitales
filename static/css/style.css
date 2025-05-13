@@ -11338,7 +11338,7 @@ html [class*='section-'].section-top-0 {
     }
 
     .section-sm.section-first {
-        padding-top: 80px;
+        padding-top: 50px;
     }
 
     .section-sm.section-last {
@@ -11363,12 +11363,9 @@ html [class*='section-'].section-top-0 {
         padding: 40px 0;
     }
 
-    .section-sm.section-first {
-        padding-top: 0px;
-    }
 
     .section-sm.section-last {
-        padding-bottom: 100px;
+        padding-bottom: 50px;
     }
 
     .section-md {
@@ -11376,7 +11373,7 @@ html [class*='section-'].section-top-0 {
     }
 
     .section-lg {
-        padding: 90px 0;
+        padding: 40px 0;
     }
 
     .section-inset-custom-6,
@@ -17256,7 +17253,7 @@ Version: 3.5.4 Timestamp: Sun Aug 30 13:30:32 EDT 2015
     max-width: 262px;
     background-color: #ffffff;
     border-radius: 4px;
-    padding: 32px 24px;
+    padding: 30px 24px;
     margin: 12px;
     text-decoration: none;
     overflow: hidden;
