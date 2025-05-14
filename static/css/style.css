@@ -87,10 +87,12 @@ body {
     color: var(--main-color) !important;
 }
 
-.dark-link:hover {
+.dark-link:hover, .underline-offset {
     text-decoration: underline;
     text-underline-offset: 4px;
 }
+
+
 
 /* Contexts */
 /* Typography */

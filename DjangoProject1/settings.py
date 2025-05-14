@@ -75,7 +75,7 @@ WSGI_APPLICATION = 'DjangoProject1.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'competencia3',
+        'NAME': 'competencia',
         'USER': 'postgres',
         'PASSWORD': '1234',
         'HOST': 'localhost',
@@ -132,7 +132,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',  # Carpeta global para archivos estáticos
 ]
 
-LOGIN_URL = '/login/'
+LOGIN_URL = '/accounts/login/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

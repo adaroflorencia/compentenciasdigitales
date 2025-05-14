@@ -8,56 +8,36 @@ from .models import Topic, Question, Option, TopicResult
 from django.http import HttpResponse
 from pdf_generator.views import generar_pdf
 
-def docente(request):
-    return render(request, 'form/docentes.html')
 
 def estudiante(request):
     return render(request, 'form/estudiantes.html')
 
-def no_docentes(request):
-    return render(request, 'form/no_docentes.html')
-
 
 def get_questions_by_role(user):
     try:
-        if not user.role:
-            logging.warning(f"El usuario {user.email} no tiene un rol asignado")
-            return Question.objects.none()
-
-        #El admin puede visualizar todas las preguntas
-        if user.role.name == 'administrador':
-            questions = Question.objects.all()
-            return questions
-
-        #Traer tópicos asociados al rol
-        topic = Topic.objects.filter(role=user.role)
-
-        if not topic.exists():
-            logging.warning(f"No Se encontró ningún tópico para el rol {user.role.name}")
-            return Question.objects.none()
-
-        #Almacenar preguntas por tópico
-        questions = Question.objects.filter(topic__in=topic)
-
-        return questions
-
+        # Simplificado para devolver todas las preguntas sin filtros
+        return Question.objects.all().order_by('id')  # Ordenadas por ID para consistencia
     except Exception as e:
-        logging.error(f"Error al obtener preguntas para el usuario {user.email}: {e}")
+        logging.error(f"Error al obtener preguntas: {e}")
         return Question.objects.none()
-
 
 @login_required
 def evaluate(request):
     if TopicResult.objects.filter(user=request.user).exists():
         return redirect('results')
 
+    if 'form_completed' in request.session:
+        request.session.flush()
+
     # Obtener todas las preguntas solo si no están en la sesión
     if 'all_questions' not in request.session:
         all_questions = list(get_questions_by_role(request.user))
+        if not all_questions:
+            return render(request, 'form/no_questions.html')  # Crear esta plantilla
         request.session['all_questions'] = [q.id for q in all_questions]
     else:
         question_ids = request.session['all_questions']
-        all_questions = list(Question.objects.filter(id__in=question_ids))
+        all_questions = list(Question.objects.filter(id__in=question_ids).order_by('id'))
 
     # Inicializar variables de sesión
     if 'answers' not in request.session:
@@ -107,7 +87,6 @@ def evaluate(request):
                     'current_index': current_question_index + 1,
                     'total_questions': len(all_questions),
                     'answered_questions': len(request.session['answers']),
-                    'user_role': request.user.role.name if request.user.role else None,
                     'error_message': 'Por favor, seleccione una opción antes de continuar.'
                 }
                 return render(request, 'form/evaluate.html', context)
@@ -177,7 +156,6 @@ def evaluate(request):
         'current_index': current_question_index + 1,
         'total_questions': len(all_questions),
         'answered_questions': len(request.session['answers']),
-        'user_role': request.user.role.name if request.user.role else None
     }
 
     return render(request, 'form/evaluate.html', context)
@@ -282,7 +260,6 @@ def results(request):
         context = {
             'results': final_results,
             'total_score': average_total,
-            'user_role': request.user.role.name if request.user.role else None,
             'total_level': total_level,
         }
 
@@ -314,10 +291,9 @@ def determine_level(percentage):
 def submit_answers(request):
     try:
         if not request.session.get('answers'):
-            return redirect('evaluate.html')
+            return redirect('evaluate')
 
-        return redirect('results.html')
-
+        return redirect('results')
     except Exception as e:
         logging.error(f"Error en submit_answers: {e}")
-        return redirect('results.html')
+        return redirect('evaluate')
