@@ -16,7 +16,7 @@ body {
     margin: 20px;
 }
 
-h2.fw-bold {
+h2.fw-bold, h4.fw-bold {
     font-weight: 700 !important;
     font-family: 'Montserrat', Arial, sans-serif;
 }
@@ -70,5 +70,9 @@ h3.fw-bold, span.fw-bold{
     width: 100px; /* Tamaño ajustable */
     height: auto;
     margin-right: 20px;
+}
+
+.text-justify {
+    text-align: justify;
 }
 

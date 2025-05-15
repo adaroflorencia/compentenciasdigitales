@@ -2,99 +2,106 @@
 {% load static %}
 
 {% block content %}
-<section class="section section-sm section-last bg-default bg-gray-4">
-    <div class="results-section">
-        <div class="container">
-            <h2 class="heading-3 mx-5 text-center">Tu nivel de Competencias Digitales</h2>
-            <div class="row justify-content-center py-1">
-                <div class="col-md-10 col-lg-5 col-xl-6 text-center">
-                    <div class="badge-container">
-                        <div class="level-{{ total_level|lower }}">
-                            <div class="">
-                                <img src="{% static 'images/UNCUYO-INSIGNIA-DigComp_Macro.png' %}" alt="Insignia Macro"
-                                    width="350" height="200" />
+    <section class="section section-sm section-last bg-default bg-gray-4">
+        <div class="results-section">
+            <div class="container">
+                <h2 class="heading-3 mx-5 text-center">Tu nivel de Competencias Digitales</h2>
+                <div class="row justify-content-center py-1">
+                    <div class="col-md-10 col-lg-5 col-xl-6 text-center">
+                        <div class="badge-container">
+                            <div class="level-{{ total_level|lower }}">
+                                <div class="">
+                                    <img src="{% static 'images/UNCUYO-INSIGNIA-DigComp_Macro.png' %}"
+                                         alt="Insignia Macro"
+                                         width="350" height="200"/>
+                                </div>
+                                <span class="heading-2">{{ total_level }}</span>
                             </div>
-                            <span class="heading-2">{{ total_level }}</span>
                         </div>
-                        <h3 class="heading-4 my-2">Puntaje Total: {{ total_score }}</h3>
                     </div>
-                </div>
 
-                <div class="col-md-10 col-lg-7 col-xl-6 px-2 ">
+                    <div class="col-md-10 col-lg-7 col-xl-6 px-2 ">
 
-                    {% for topic_name, topic_data in results.items %}
-                    <div class="topic-container mx-4 mt-2">
-                        <div class="progress-linear  progress-secondary level-{{ topic_data.level|lower }}">
-                            <div class="progress-header">
-                                <div class="d-flex align-items-center">
-                                    <p class="progress-title ">{{ topic_name }}</p>
-                                    <div class="badge-small-wrapper my-4 ms-4">
-                                        <span class="badge-small-text">{{ topic_data.level }}</span>
+                        {% for topic_name, topic_data in results.items %}
+                            <div class="topic-container mx-4 mt-2">
+                                <div class="progress-linear  progress-secondary level-{{ topic_data.level|lower }}">
+                                    <div class="progress-header">
+                                        <div class="d-flex align-items-center">
+                                            <p class="progress-title ">{{ topic_name }}</p>
+                                            <div class="badge-small-wrapper my-4 ms-4">
+                                                <span class="badge-small-text">{{ topic_data.level }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="progress-bar-linear-wrap">
+                                        <div class="progress-bar-linear ">
+                                            <span class="progress-value">{{ topic_data.score }}%</span>
+                                            <span class="progress-marker"></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="progress-bar-linear-wrap">
-                                <div class="progress-bar-linear ">
-                                    <span class="progress-value">{{ topic_data.score }}%</span>
-                                    <span class="progress-marker"></span>
-                                </div>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Botón para generar el PDF -->
-    <div class="d-flex justify-content-center mt-4">
-        <a href="{% url 'results' %}?format=pdf"
-            class="button btn-blue text-decoration-none">
-            <i class="fas fa-file-pdf"></i> Descargar como PDF
-        </a>
-    </div>
-
-</section>
-<section class="quote-lisa" data-caption-animate="slideInUp" data-caption-delay="300">
-    <div class="level-description mx-5">
-        <h3 class="heading-3 my-1 text-center">Descripción de Niveles</h3>
-        <ol class="list-marked my-4">
-            <li class="my-3"><strong>A1-A2: Nivel inicial</strong> - El usuario posee conocimientos básicos y
-                limitados, con
-                capacidad
-                para manejar situaciones cotidianas simples.
-            </li>
-            <li class="my-3"><strong>B1-B2: Nivel intermedio</strong> - El usuario tiene un dominio más amplio y
-                fluido del tema,
-                pudiendo comprender y participar en conversaciones más complejas.
-            </li>
-
-        </ol>
-    </div>
-</section>
-<section class="section section-sm section-last bg-default bg-gray-4">
-    <div class="container">
-        <h3 class="text-uppercase text-center">¡Felicitaciones!</h3>
-        <p class="mt-4 text-center">
-            Ya completaste el primer paso del proceso. Este es un gran avance en tu camino
-            hacia el fortalecimiento de tus habilidades digitales.
-        </p>
-        <p class="text-center">
-            Ahora te invitamos a continuar con la evaluación de las distintas <strong>competencias
-                digitales</strong>, donde podrás demostrar tus conocimientos en áreas claves y avanzar hacia el
-            reconocimiento formal de las competencias que ya posees y de aquellas que adquieras durante el procesos de
-            aprendizaje.
-        </p>
-        <div class="text-center mt-5">
-            <a href="{% url 'base_student' %}"
-                class="button btn-blue text-decoration-none">
-                Continuar con la evaluación
+        <!-- Botón para generar el PDF -->
+        <div class="d-flex justify-content-center mt-4">
+            <a href="{% url 'results' %}?format=pdf"
+               class="button btn-blue text-decoration-none">
+                <i class="fas fa-file-pdf"></i> Descargar como PDF
             </a>
         </div>
 
-    </div>
-</section>
+    </section>
+    <section class="quote-lisa" data-caption-animate="slideInUp" data-caption-delay="300">
+        <div class="level-description mx-5">
+            <h3 class="heading-3 my-1 text-center">Descripción de Niveles</h3>
+            <ol class="list-marked my-4">
+                <li class="my-3"><strong>A1-A2: Nivel inicial</strong>
+                </li>
+                <p class="px-4 text-justify">Con autonomía y una orientación apropiada la persona usuaria puede hacer algunas
+                    búsquedas en línea a través de motores de búsqueda.
+                    Entiende cómo se genera, gestiona y se hace disponible la información.
+                    Ajusta las búsquedas según los resultados.
+                    Puede seguir la información presentada en hiperenlaces y formas no lineales.</p>
+                <li class="my-3"><strong>B1-B2: Nivel intermedio</strong>
+                </li>
+                <p class="px-4 text-justify">De manera autónoma, de acuerdo con sus necesidades y en la resolución de problemas
+                    concretos, la persona usuaria puede navegar por Internet para obtener información y puede buscar
+                    información en línea.
+                    Entiende cómo la información se puede encontrar en diferentes dispositivos y medios de comunicación.
+                    Entiende los principios de indización. Busca palabras que limitan el número de resultados. Tiene
+                    habilidades estratégicas de información para actividades orientadas a objetivo.</p>
+
+            </ol>
+        </div>
+    </section>
+    <section class="section section-sm section-last bg-default bg-gray-4">
+        <div class="container">
+            <h3 class="text-uppercase text-center">¡Felicitaciones!</h3>
+            <p class="mt-4 text-center">
+                Ya completaste el primer paso del proceso. Este es un gran avance en tu camino
+                hacia el fortalecimiento de tus habilidades digitales.
+            </p>
+            <p class="text-center">
+                Ahora te invitamos a continuar con la evaluación de las distintas <strong>competencias
+                digitales</strong>, donde podrás demostrar tus conocimientos en áreas claves y avanzar hacia el
+                reconocimiento formal de las competencias que ya posees y de aquellas que adquieras durante el procesos
+                de
+                aprendizaje.
+            </p>
+            <div class="text-center mt-5">
+                <a href="{% url 'base_student' %}"
+                   class="button btn-blue text-decoration-none">
+                    Continuar con la evaluación
+                </a>
+            </div>
+
+        </div>
+    </section>
 
 
 
