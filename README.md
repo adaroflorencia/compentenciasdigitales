@@ -1,29 +1,34 @@
-📘 Proyecto: Diagnóstico de Competencias Digitales
-🧩 Descripción
+# 📘 Proyecto: Diagnóstico de Competencias Digitales
+
+## 🧩 Descripción
+
 Este proyecto tiene como objetivo identificar las brechas de competencias digitales en diferentes perfiles institucionales (docentes, estudiantes, personal no docente) a través de un sistema de diagnóstico alineado con los marcos europeos DigComp 2.2 y DigCompEdu.
 
-🎯 Objetivos
-Relevar el nivel de competencias digitales de la comunidad educativa.
+## 🎯 Objetivos
 
-Adaptar el diagnóstico según el rol del usuario.
+- Relevar el nivel de competencias digitales de la comunidad educativa.
 
-Visualizar resultados por competencia y nivel.
+- Adaptar el diagnóstico según el rol del usuario.
 
-Generar recomendaciones personalizadas de formación.
+- Visualizar resultados por competencia y nivel.
 
-Contribuir a una transformación digital inclusiva y sustentable.
+- Generar recomendaciones personalizadas de formación.
 
-🛠️ Tecnologías y herramientas utilizadas
-Python / Django – Desarrollo del backend del sistema.
+- .Contribuir a una transformación digital inclusiva y sustentable.
 
-HTML + Bootstrap – Frontend responsive.
+## 🛠️ Tecnologías y herramientas utilizadas
 
-PosgreSQL – Base de datos para almacenamiento de respuestas y resultados.
+- Python / Django – Desarrollo del backend del sistema.
 
-🚧 Estado actual del proyecto
-🔄 En desarrollo
+- HTML + Bootstrap – Frontend responsive.
 
-📞 Contacto
-Florencia Adaro
-adaro.florencia@uncuyo.edu.ar
-Secretaría de Tranformación Digital - Universidad Nacional de Cuyo
+- PosgreSQL – Base de datos para almacenamiento de respuestas y resultados.
+
+## 🚧 Estado actual del proyecto
+
+- 🔄 En desarrollo
+
+## 📞 Contacto
+- Florencia Adaro
+- adaro.florencia@uncuyo.edu.ar
+- Secretaría de Tranformación Digital - Universidad Nacional de Cuyo
