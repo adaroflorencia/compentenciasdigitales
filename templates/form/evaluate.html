@@ -56,4 +56,121 @@
         </div>
     </div>
 </section>
+    
+    <section class="section section-sm section-last bg-default bg-gray-4">
+    <div class="container pt-4">
+        <div class="card shadow-lg">
+            <div class="card-header bg-white">
+                <h2 class="text-center mb-0">Resultados de Actividades</h2>
+            </div>
+            <div class="card-body">
+                <!-- Pestañas de navegación -->
+                <ul class="nav nav-tabs" id="resultsTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button" role="tab" aria-controls="summary" aria-selected="true">Resumen</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab" aria-controls="details" aria-selected="false">Detalle por Actividad</button>
+                    </li>
+                </ul>
+                
+                <!-- Contenido de las pestañas -->
+                <div class="tab-content pt-4" id="resultsTabsContent">
+                    <!-- Pestaña de Resumen -->
+                    <div class="tab-pane fade show active" id="summary" role="tabpanel" aria-labelledby="summary-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card mb-4">
+                                    <div class="card-header bg-light">
+                                        <h5 class="mb-0">Estadísticas Generales</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-6 text-center">
+                                                <h3 class="display-4 text-success">{{ correctas }}</h3>
+                                                <p class="text-muted">Respuestas Correctas</p>
+                                            </div>
+                                            <div class="col-6 text-center">
+                                                <h3 class="display-4 text-danger">{{ incorrectas }}</h3>
+                                                <p class="text-muted">Respuestas Incorrectas</p>
+                                            </div>
+                                        </div>
+                                        <div class="text-center mt-3">
+                                            <h4>Total Completado: {{ porcentaje_completado }}%</h4>
+                                            <div class="progress">
+                                                <div class="progress-bar progress-color" role="progressbar" style="width: {{ porcentaje_completado }}%" 
+                                                     aria-valuenow="{{ porcentaje_completado }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card mb-4">
+                                    <div class="card-header bg-light">
+                                        <h5 class="mb-0">Gráfico de Rendimiento</h5>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <canvas id="resultsChart" width="300" height="300"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Pestaña de Detalle por Actividad -->
+                    <div class="tab-pane fade" id="details" role="tabpanel" aria-labelledby="details-tab">
+                        <div class="accordion" id="accordionActivities">
+                            {% for respuesta in respuestas %}
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                                    <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}" type="button" 
+                                            data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" 
+                                            aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" 
+                                            aria-controls="collapse{{ forloop.counter }}">
+                                        <div class="d-flex justify-content-between w-100">
+                                            <span>Actividad {{ forloop.counter }}: {{ respuesta.titulo }}</span>
+                                            {% if respuesta.is_correct %}
+                                            <span class="badge bg-success ms-2">Correcto</span>
+                                            {% else %}
+                                            <span class="badge bg-danger ms-2">Incorrecto</span>
+                                            {% endif %}
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" 
+                                     aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#accordionActivities">
+                                    <div class="accordion-body">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <p class="fw-bold">Tipo de actividad:</p>
+                                                    <p>{{ respuesta.activity_type_display }}</p>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <p class="fw-bold">Tu respuesta:</p>
+                                                    <p>{{ respuesta.user_response_display }}</p>
+                                                    
+                                                    {% if not respuesta.is_correct %}
+                                                    <p class="fw-bold text-danger">Respuesta correcta:</p>
+                                                    <p>{{ respuesta.correct_answer }}</p>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-white d-flex justify-content-between">
+                <a href="{% url 'competencias' %}" class="btn btn-outline-secondary">Volver a las actividades</a>
+                <a href="{% url 'base_student' %}" class="btn btn-stuffed">Ir al inicio</a>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
