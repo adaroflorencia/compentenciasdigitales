@@ -14,6 +14,9 @@ def competencias(request):
 def informacion_datos(request):
     return render(request, 'sections_alfabetizacion/base_alfabetizacion.html')
 
+def comunicacion_colaboracion(request):
+    return render(request, 'sections_comunicacion/base_comunicacion.html')
+
 
 @login_required
 def result_form(request):
