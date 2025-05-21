@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% include 'sections_alfabetizacion/slider_informacion.html' %}
+    {% include 'sections_alfabetizacion/why_albabetizacion.html' %}
+    {% include 'sections_alfabetizacion/content_alfabetizacion.html' %}
+    {% include 'sections_alfabetizacion/route_alfabetizacion.html' %}
+
+    {% block extra_scripts %}
+        <script src="{% static 'js/activity.js' %}"></script>
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% include 'sections_comunicacion/slider_comunicacion.html' %}
+    {% include 'sections_comunicacion/why_comunicacionn.html' %}
+    {% include 'sections_comunicacion/content_comunicacion.html' %}
+    {% include 'sections_comunicacion/route_comunicacion.html' %}
+    
+    {% block extra_scripts %}
+        <script src="{% static 'js/activity.js' %}"></script>
+    {% endblock %}
+{% endblock %}

@@ -5,14 +5,14 @@ from django.contrib.auth.decorators import login_required
 import json
 
 def base_student(request):
-    return render(request, 'sections_student/base_student.html')
+    return render(request, 'sections_assessment/base_student.html')
 
 def competencias(request):
-    return render(request, 'sections_student/competencias.html', {
+    return render(request, 'sections_alfabetizacion/competencias.html', {
     })
 
 def informacion_datos(request):
-    return render(request, 'sections_student/informacion_datos.html')
+    return render(request, 'sections_alfabetizacion/base_alfabetizacion.html')
 
 
 @login_required
@@ -101,7 +101,7 @@ def result_form(request):
         'porcentaje_completado': porcentaje_completado,
     }
 
-    return render(request, 'sections_student/result_form.html', context)
+    return render(request, 'sections_alfabetizacion/result_form.html', context)
 
 
 @login_required

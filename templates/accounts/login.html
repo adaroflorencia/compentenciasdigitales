@@ -23,7 +23,7 @@
                                     <input type="password" id="id_password" name="password" class="form-control"
                                            placeholder="Ingresa una contraseña" required>
                                     {% if form.non_field_errors %}
-                                         <div class="alert alert-danger">
+                                         <div class="alert alert-danger mt-4">
                                             {% for error in form.non_field_errors %}
                                                 {{ error }}
                                             {% endfor %}
@@ -35,7 +35,7 @@
                                 </div>
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-blue mt-3">Iniciar Sesión</button>
+                                    <button type="submit" class="btn btn-stuffed mt-3">Iniciar Sesión</button>
                                 </div>
                                 <div class="my-3 text-center">
                                     <p>¿No tienes cuenta? <a href="{% url 'signup' %}"
