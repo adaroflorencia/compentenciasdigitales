@@ -1,17 +1,34 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
     <section class="section section-sm section-last bg-default bg-gray-4 ">
         <div class="container pt-4">
-            <h2>Actividad: {{ activity.question }}</h2>
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Responder y continuar</button>
-            </form>
-            {% if user_answer %}
-                <p>Tu respuesta anterior: {{ user_answer.answer }}</p>
-                <p>{% if user_answer.is_correct %}¡Correcto!{% else %}Incorrecto{% endif %}</p>
+            <div class="card shadow-lg">
+                <div class="card-body px-5 py-4">
+                    <h4 class="ps-4 pt-2 text-uppercase">{{ activity.question }}</h4>
+                    <h6 class="ps-4 pt-2">{{ activity.subquestion }}</h6>
+                    {% if activity.image %}
+                        <div class="text-center my-4">
+                            <img src="{% static activity.image %}" 
+                                 alt="Imagen de la actividad" 
+                                 class="img-fluid rounded shadow-sm"
+                                 style="max-height: 400px; object-fit: contain;">
+                        </div>
+                    {% endif %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="ps-4 pt-4">
+                            {{ form.as_p }}
+                        </div>
+                         <div class="d-flex justify-content-end mx-5 mb-5">
+                            <button type="submit" class="btn btn-stuffed mt-3 btn-same-width validacion">Responder y continuar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </section>
-{% endif %}
+{% block extra_scripts %}
+        <script src="{% static 'js/activity.js' %}"></script>
+    {% endblock %}
 {% endblock %}

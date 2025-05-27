@@ -32,6 +32,7 @@ class Activity(models.Model):
     options = models.JSONField(blank=True, null=True, help_text="Lista de opciones si aplica")
     correct_answer = models.JSONField(help_text="Respuesta(s) correcta(s) según el tipo", default=list)
     custom_style = models.TextField(blank=True, null=True, help_text="CSS opcional")
+    image = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return f"{self.subtopic} - {self.question[:30]}..."

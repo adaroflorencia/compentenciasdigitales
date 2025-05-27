@@ -47,6 +47,7 @@ def base_activity_redirect(request):
         logging.error("No activities found in database")
     return render(request, 'activities/no_activities.html')
 
+
 @login_required
 def activity_flow(request, activity_id):
     activity = get_object_or_404(Activity, id=activity_id)
@@ -57,27 +58,28 @@ def activity_flow(request, activity_id):
         form = ActivityForm(request.POST)
         if form.is_valid():
             answer = form.cleaned_data['answer']
-            # For checkbox, ensure it's a list
             if activity.activity_type == 'checkbox' and isinstance(answer, str):
                 answer = [answer]
             is_correct = evaluate_answer(activity, answer)
-            # Save or update answer
+
+            # Guardar respuesta
             obj, created = UserActivityAnswer.objects.update_or_create(
                 user=request.user,
                 activity=activity,
                 defaults={'answer': answer, 'is_correct': is_correct}
             )
-            # Next activity logic
-            next_activity = Activity.objects.filter(
-                subtopic=activity.subtopic, order__gt=activity.order
-            ).order_by('order').first()
-            if not next_activity:
-                # Check across all subtopics (for 5 activities)
-                all_acts = Activity.objects.all().order_by('order')
-                user_done = UserActivityAnswer.objects.filter(user=request.user).count()
-                if user_done >= 5:
-                    return redirect('feedback')
-                next_activity = all_acts[user_done] if user_done < all_acts.count() else None
+
+            # NUEVA LÓGICA MÁS SIMPLE
+            # Contar total de actividades respondidas
+            total_answered = UserActivityAnswer.objects.filter(user=request.user).count()
+
+            # Si ya respondió 5, ir a feedback
+            if total_answered >= 5:
+                return redirect('feedback')
+
+            # Buscar siguiente actividad por orden
+            next_activity = Activity.objects.filter(order__gt=activity.order).order_by('order').first()
+
             if next_activity:
                 return redirect('activity_flow', activity_id=next_activity.id)
             else:
@@ -92,12 +94,19 @@ def activity_flow(request, activity_id):
         'user_answer': user_answer_obj
     })
 
+
 @login_required
 def feedback(request):
-    # Get the first 5 activities answered by the user
-    answers = UserActivityAnswer.objects.filter(user=request.user).order_by('answered_at')[:5]
-    total = answers.count()
-    correct = answers.filter(is_correct=True).count()
+    # Primero obtener el queryset sin slice
+    user_answers = UserActivityAnswer.objects.filter(user=request.user).order_by('answered_at')
+
+    # Obtener las primeras 5 respuestas
+    answers = user_answers[:5]
+
+    # Calcular estadísticas usando el queryset original limitado a 5
+    total = user_answers[:5].count()
+    correct = user_answers.filter(is_correct=True)[:5].count()
+
     return render(request, 'activities/feedback.html', {
         'answers': answers,
         'total': total,

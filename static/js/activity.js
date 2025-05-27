@@ -1,81 +1,132 @@
 //Actividad de seleccionar
 document.addEventListener('DOMContentLoaded', () => {
   const imageItems = document.querySelectorAll('.image-item');
-  const checkButton = document.getElementById('checkAnswers');
-  const resultDiv = document.getElementById('result');
-  const contadorSpan = document.getElementById('contador-selecciones');
-  const correctImageIds = [1, 4];
+  const submitButton = document.querySelector('.validar-imagenes');
   const MAX_SELECTIONS = 2;
-  let selecciones = [];
+  let selectedImages = [];
 
-  function toggleSeleccion(element, imagenId) {
-    const overlay = element.querySelector('.selection-overlay');
+  function toggleSelection(element) {
+    const imageId = element.dataset.id || selectedImages.length + 1; // Usar data-id si existe, sino generar uno
+    const isSelected = element.classList.contains('selected');
 
-    if (element.classList.contains('selected')) {
-      // Deseleccionar
+    if (isSelected) {
+      // Deseleccionar imagen
       element.classList.remove('selected');
-      selecciones = selecciones.filter(id => id !== imagenId);
+      element.style.backgroundColor = '';
+      element.style.border = '';
+      element.style.transform = '';
+      element.style.boxShadow = '';
+
+      const overlay = element.querySelector('.selection-overlay');
       if (overlay) overlay.style.display = 'none';
+
+      // Remover de array de seleccionadas
+      selectedImages = selectedImages.filter(id => id !== imageId);
+
+      // Desmarcar radio button si existe
+      const radioInput = element.querySelector('input[type="radio"]');
+      if (radioInput) radioInput.checked = false;
+
     } else {
-      if (selecciones.length >= MAX_SELECTIONS) {
-        alert('Solo puedes seleccionar 2 imágenes');
+      // Verificar límite de selecciones
+      if (selectedImages.length >= MAX_SELECTIONS) {
+        alert(`Solo puedes seleccionar ${MAX_SELECTIONS} imágenes máximo`);
         return;
       }
-      // Seleccionar
+
+      // Seleccionar imagen con efectos visuales
       element.classList.add('selected');
-      selecciones.push(imagenId);
-      if (overlay) overlay.style.display = 'block';
+      element.style.backgroundColor = 'rgba(0, 123, 255, 0.15)';
+      element.style.border = '3px solid #007bff';
+      element.style.transform = 'scale(1.02)';
+      element.style.boxShadow = '0 4px 15px rgba(0, 123, 255, 0.3)';
+      element.style.transition = 'all 0.3s ease';
+
+      // Mostrar overlay si existe
+      const overlay = element.querySelector('.selection-overlay');
+      if (overlay) {
+        overlay.style.display = 'block';
+        overlay.style.backgroundColor = 'rgba(0, 123, 255, 0.2)';
+        overlay.style.border = '2px solid #007bff';
+      }
+
+      // Agregar a array de seleccionadas
+      selectedImages.push(imageId);
+
+      // Marcar radio button si existe (para compatibilidad)
+      const radioInput = element.querySelector('input[type="radio"]');
+      if (radioInput) radioInput.checked = true;
     }
 
-    // Actualizar contador y campo oculto
-    contadorSpan.textContent = selecciones.length;
+    // Actualizar contador si existe
+    const contador = document.getElementById('contador-selecciones');
+    if (contador) {
+      contador.textContent = selectedImages.length;
+    }
+
+    // Actualizar campo oculto si existe
     const hiddenInput = document.getElementById('selected_images');
-    if (hiddenInput) hiddenInput.value = selecciones.join(',');
+    if (hiddenInput) {
+      hiddenInput.value = selectedImages.join(',');
+    }
+
+    console.log('Imágenes seleccionadas:', selectedImages);
   }
 
   // Asignar evento de clic a cada imagen
-  imageItems.forEach(item => {
-    const imagenId = parseInt(item.dataset.id);
-    item.addEventListener('click', () => toggleSeleccion(item, imagenId));
+  imageItems.forEach((item, index) => {
+    // Asignar data-id si no existe
+    if (!item.dataset.id) {
+      item.dataset.id = index + 1;
+    }
+
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      toggleSelection(item);
+    });
   });
 
-  // Enviar respuestas al backend
-  checkButton?.addEventListener('click', () => {
-    if (selecciones.length !== MAX_SELECTIONS) {
-      resultDiv.innerHTML = '<div class="alert alert-warning">Debes seleccionar exactamente 2 imágenes.</div>';
+  // Validar antes de enviar
+  submitButton?.addEventListener('click', (e) => {
+    if (selectedImages.length === 0) {
+      e.preventDefault();
+      alert('Debes seleccionar al menos una imagen antes de continuar.');
       return;
     }
 
-    const isCorrect = correctImageIds.every(id => selecciones.includes(id)) &&
-                      selecciones.every(id => correctImageIds.includes(id));
+    if (selectedImages.length > MAX_SELECTIONS) {
+      e.preventDefault();
+      alert(`Solo puedes seleccionar máximo ${MAX_SELECTIONS} imágenes.`);
+      return;
+    }
 
-    fetch('/guardar_respuesta/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': getCookie('csrftoken')
-      },
-      body: JSON.stringify({
-        selected_ids: selecciones,
-        is_correct: isCorrect,
-        activity_type: 'seleccion_imagenes',
-        activity_id: 1,
-        subtopic_id: parseInt(document.querySelector('.actividad').dataset.subtopicId)
-      })
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Respuesta guardada:', data);
-    })
-    .catch(error => console.error('Error al enviar al backend:', error));
+    console.log('Enviando selecciones:', selectedImages);
   });
 });
 
 /*Actividad input*/
 
 document.addEventListener('DOMContentLoaded', () => {
-    const textInput = document.querySelectorAll('')
+  const form = document.querySelector('form');
 
+  // Función para convertir texto a Title Case
+  function toTitleCase(str) {
+    return str.toLowerCase().split(' ').map(word =>
+      word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ');
+  }
+
+  // Validación al enviar el formulario
+  form?.addEventListener('submit', (e) => {
+    const textInputs = form.querySelectorAll('input[type="text"], textarea');
+
+    // Formatear todos los campos de texto
+    textInputs.forEach(input => {
+      if (input.value && input.value.trim() !== '') {
+        input.value = toTitleCase(input.value.trim());
+      }
+    });
+  });
 });
 
 

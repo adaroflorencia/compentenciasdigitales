@@ -14,7 +14,7 @@
                                 <div class="col-4 d-flex justify-content-center">
                                     <label class="image-option-wrapper w-50">
                                         <div class="image-item shade p-3 position-relative">
-                                            <input type="radio" name="answer" value="{{ choice.0 }}" class="radio-input">
+                                            <input type="radio" name="answer" value="{{ choice.0 }}" class="radio-input visually-hidden">
                                             <img src="{{ choice.1 }}" alt="Opción {{ forloop.counter }}"
                                                  class="option-image">
                                             <div class="selection-overlay"></div>
@@ -38,4 +38,8 @@
             </div>
         </div>
     </section>
+
+{% block extra_scripts %}
+        <script src="{% static 'js/activity.js' %}"></script>
+    {% endblock %}
 {% endblock %}

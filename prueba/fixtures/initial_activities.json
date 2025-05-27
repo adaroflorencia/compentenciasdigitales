@@ -21,6 +21,7 @@
       "subtopic": 1,
       "order": 1,
       "activity_type": "image_select",
+      "image": null,
       "question": "Selecciona un motor de búsqueda",
       "subquestion": "Haz click para seleccionar una imagen. Solo 2 imágenes son correctas.",
       "options": ["/static/images/dropbox.png", "/static/images/google.png", "/static/images/vscode.png", "/static/images/linux.png", "/static/images/mozilla firefox.png", "/static/images/drive.png", "/static/images/nodejs.png", "/static/images/slack.png", "/static/images/whatsapp.png"] ,
@@ -34,11 +35,12 @@
     "fields": {
       "subtopic": 1,
       "order": 2,
-      "activity_type": "checkbox",
-      "question": "Marca los números pares:",
-      "subquestion": "Haz click para seleccionar una imagen. Solo 2 imágenes son correctas.",
-      "options": ["1", "2", "3", "4"],
-      "correct_answer": ["2", "4"],
+      "activity_type": "select",
+      "image": null,
+      "question": "Selecciona",
+      "subquestion": "¿Qué es la infodemia?",
+      "options": ["-", "Es la replicación masiva de noticias e informaciones reales o falsas.", "Es una enfermedad causada por exceso de información digital.", "Es una red social creada para difundir noticias falsas."],
+      "correct_answer": "Es la replicación masiva de noticias e informaciones reales o falsas.",
       "custom_style": ""
     }
   },
@@ -49,10 +51,11 @@
       "subtopic": 1,
       "order": 3,
       "activity_type": "text_input",
-      "question": "¿Cuánto es 2 + 2?",
-      "subquestion": "Haz click para seleccionar una imagen. Solo 2 imágenes son correctas.",
+      "image": null,
+      "question": "Autor de un texto",
+      "subquestion": "¿Qué Autor dijo la frase celebre \"Siempre imaginé que el Paraíso sería algún tipo de biblioteca\"?",
       "options": null,
-      "correct_answer": "4",
+      "correct_answer": "Jorge luis Borges",
       "custom_style": ""
     }
   },
@@ -62,11 +65,12 @@
     "fields": {
       "subtopic": 1,
       "order": 4,
-      "activity_type": "select",
-      "question": "Selecciona el número mayor:",
-      "subquestion": "Haz click para seleccionar una imagen. Solo 2 imágenes son correctas.",
-      "options": ["5", "9", "3"],
-      "correct_answer": "9",
+      "activity_type": "checkbox",
+      "image": "images/avatar.png",
+      "question": "¿Quién tiene el mejor argumento?",
+      "subquestion": "Tres amigos leyeron algo de información en internet \n ¿Quién tiene el mejor argumento?",
+      "options": ["Sofía", "Jesús", "Marta"],
+      "correct_answer": "Marta",
       "custom_style": ""
     }
   },
@@ -77,10 +81,11 @@
       "subtopic": 1,
       "order": 5,
       "activity_type": "text_input",
-      "question": "Escribe la palabra 'nueve' en letras:",
-      "subquestion": "Haz click para seleccionar una imagen. Solo 2 imágenes son correctas.",
+      "image": "images/moon.jpg",
+      "question": "Encuentra la imagen original",
+      "subquestion": "Manuel creó un fotomontaje para engañar y divertir a sus compañeros de clase. \n Cambió un elemento en una fotografía de Neil Armstrong caminando en la Luna. \n Cuál?",
       "options": null,
-      "correct_answer": "nueve",
+      "correct_answer": "Bandera",
       "custom_style": ""
     }
   }
