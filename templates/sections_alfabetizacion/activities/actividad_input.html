@@ -1,0 +1,32 @@
+<div class="container pt-5 actividad" data-pregunta-id="2" data-topic-id="1" data-subtopic-id="1">
+    <form id="form-actividad" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="tipo_actividad" value="adivinar_autor">
+        <input type="hidden" name="respuesta_correcta" value="Jorge Luis Borges">
+        
+        <div class="card shadow-lg">
+            <div class="card-body px-5 py-4">
+                <h3 class="heading-3 text-center mx-5 my-4">Nombra el autor de un texto</h3>
+                <h5 class="ps-4 pt-2 text-center">¿Qué Autor dijo la frase celebre "Siempre imaginé que el Paraíso sería algún tipo de biblioteca"?</h5>
+                
+                <div class="row p-4 d-flex justify-content-center pt-4">
+                    <div class="col-md-8">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Respuesta:</span>
+                            <input type="text" name="respuesta_usuario" class="form-control respuesta-input" 
+                                   placeholder="Escribe el nombre del autor" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-end mx-5 mb-5">
+                {% if has_next %}
+                    <button type="button" class="btn btn-stuffed mt-3 btn-same-width">Siguiente</button>
+                {% else %}
+                    <button type="button" class="btn btn-stuffed mt-3 btn-same-width">Ver Resultados</button>
+                {% endif %}
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,48 +1,49 @@
 from django.db import models
 from accounts.models import Role, CustomUser
 from form.models import Topic
-from django.contrib.postgres.fields import ArrayField
-
+from django.core.exceptions import ValidationError
 
 class Topico(models.Model):
-    topicos = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='topicos')
+    nombre_topico = models.ForeignKey(Topic, on_delete=models.CASCADE)
     def __str__(self):
-        return f"{self.topicos.name}"
+        return f"{self.nombre_topico}"
 
 
 class Subtopico(models.Model):
-    titulo = models.CharField(max_length=100)
-    topico = models.ForeignKey(Topic, on_delete=models.CASCADE, related_name='subtopicos')
+    topico = models.ForeignKey(Topico, on_delete=models.CASCADE)
+    nombre_subtopico = models.TextField()
 
     def __str__(self):
-        return f"{self.titulo} ({self.topico.name})"
+        return f"{self.topico.nombre_topico} - {self.nombre_subtopico}"
 
-class Answer(models.Model):
-    session_id = models.CharField(max_length=64)
-    activity_id = models.IntegerField()
-    activity_type = models.CharField(max_length=50)
-    user_response = models.JSONField()
-    is_correct = models.BooleanField()
-    timestamp = models.DateTimeField(auto_now_add=True)
-    subtopic = models.ForeignKey(Subtopico, on_delete=models.CASCADE, related_name='actividades')
+class Activity(models.Model):
+    ACTIVITY_TYPES = [
+        ('image_select', 'Image Select'),
+        ('checkbox', 'Checkbox'),
+        ('text_input', 'Text Input'),
+        ('select', 'Select'),
+        ('other', 'Other'),
+    ]
+    subtopic = models.ForeignKey(Subtopico, on_delete=models.CASCADE, related_name='activities')
+    order = models.PositiveIntegerField()
+    activity_type = models.CharField(max_length=20, choices=ACTIVITY_TYPES, default='text_input')
+    question = models.TextField()
+    subquestion = models.TextField()
+    options = models.JSONField(blank=True, null=True, help_text="Lista de opciones si aplica")
+    correct_answer = models.JSONField(help_text="Respuesta(s) correcta(s) según el tipo", default=list)
+    custom_style = models.TextField(blank=True, null=True, help_text="CSS opcional")
 
+    def __str__(self):
+        return f"{self.subtopic} - {self.question[:30]}..."
 
-class ResultadoTopico(models.Model):
-    topico = models.ForeignKey(Topico, on_delete=models.CASCADE, related_name='resultados')
+class UserActivityAnswer(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
+    answer = models.JSONField()
+    is_correct = models.BooleanField()
+    answered_at = models.DateTimeField(auto_now_add=True)
 
-    puntaje_obtenido = models.FloatField(default=0)
-    puntaje_total = models.FloatField(default=0)
-    porcentaje = models.FloatField(default=0)
+    class Meta:
+        unique_together = ('user', 'activity')
 
-    completado = models.BooleanField(default=False)
 
-    def calcular_porcentaje(self):
-        if self.puntaje_total > 0:
-            self.porcentaje = round((self.puntaje_obtenido / self.puntaje_total) * 100, 2)
-        else:
-            self.porcentaje = 0
-        self.save()
-
-    def __str__(self):
-        return f"{self.topico.titulo} - {self.porcentaje}%"

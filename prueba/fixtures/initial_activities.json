@@ -1,0 +1,87 @@
+[
+  {
+    "model": "prueba.topico",
+    "pk": 1,
+    "fields": {
+      "nombre_topico": 1
+    }
+  },
+  {
+    "model": "prueba.subtopico",
+    "pk": 1,
+    "fields": {
+      "topico": 1,
+      "nombre_subtopico": "Navegar, buscar y filtrar datos,información y contenidos digitales."
+    }
+  },
+  {
+    "model": "prueba.activity",
+    "pk": 1,
+    "fields": {
+      "subtopic": 1,
+      "order": 1,
+      "activity_type": "image_select",
+      "question": "Selecciona un motor de búsqueda",
+      "subquestion": "Haz click para seleccionar una imagen. Solo 2 imágenes son correctas.",
+      "options": ["/static/images/dropbox.png", "/static/images/google.png", "/static/images/vscode.png", "/static/images/linux.png", "/static/images/mozilla firefox.png", "/static/images/drive.png", "/static/images/nodejs.png", "/static/images/slack.png", "/static/images/whatsapp.png"] ,
+      "correct_answer": ["/static/images/google.png", "/static/images/mozilla firefox.png"],
+      "custom_style": ""
+    }
+  },
+  {
+    "model": "prueba.activity",
+    "pk": 2,
+    "fields": {
+      "subtopic": 1,
+      "order": 2,
+      "activity_type": "checkbox",
+      "question": "Marca los números pares:",
+      "subquestion": "Haz click para seleccionar una imagen. Solo 2 imágenes son correctas.",
+      "options": ["1", "2", "3", "4"],
+      "correct_answer": ["2", "4"],
+      "custom_style": ""
+    }
+  },
+  {
+    "model": "prueba.activity",
+    "pk": 3,
+    "fields": {
+      "subtopic": 1,
+      "order": 3,
+      "activity_type": "text_input",
+      "question": "¿Cuánto es 2 + 2?",
+      "subquestion": "Haz click para seleccionar una imagen. Solo 2 imágenes son correctas.",
+      "options": null,
+      "correct_answer": "4",
+      "custom_style": ""
+    }
+  },
+  {
+    "model": "prueba.activity",
+    "pk": 4,
+    "fields": {
+      "subtopic": 1,
+      "order": 4,
+      "activity_type": "select",
+      "question": "Selecciona el número mayor:",
+      "subquestion": "Haz click para seleccionar una imagen. Solo 2 imágenes son correctas.",
+      "options": ["5", "9", "3"],
+      "correct_answer": "9",
+      "custom_style": ""
+    }
+  },
+  {
+    "model": "prueba.activity",
+    "pk": 5,
+    "fields": {
+      "subtopic": 1,
+      "order": 5,
+      "activity_type": "text_input",
+      "question": "Escribe la palabra 'nueve' en letras:",
+      "subquestion": "Haz click para seleccionar una imagen. Solo 2 imágenes son correctas.",
+      "options": null,
+      "correct_answer": "nueve",
+      "custom_style": ""
+    }
+  }
+]

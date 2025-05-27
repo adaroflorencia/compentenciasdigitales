@@ -1,49 +1,53 @@
-/*Parte del pentágono*/
-document.querySelectorAll("#mapa svg path").forEach((path) => {
-    path.addEventListener('click', function () {
-        const url = this.getAttribute('data-url');
-        if (url) {
-            window.location.href = url;
-        }
-    });
-});
-
-// Actividad de selección
+//Actividad de seleccionar
 document.addEventListener('DOMContentLoaded', () => {
   const imageItems = document.querySelectorAll('.image-item');
   const checkButton = document.getElementById('checkAnswers');
   const resultDiv = document.getElementById('result');
-  const selected = new Set();
+  const contadorSpan = document.getElementById('contador-selecciones');
   const correctImageIds = [1, 4];
   const MAX_SELECTIONS = 2;
+  let selecciones = [];
 
-  imageItems.forEach(item => {
-    item.addEventListener('click', () => {
-      const value = item.getAttribute('data-value');
+  function toggleSeleccion(element, imagenId) {
+    const overlay = element.querySelector('.selection-overlay');
 
-      if (selected.has(value)) {
-        selected.delete(value);
-        item.classList.remove('selected');
-      } else if (selected.size < MAX_SELECTIONS) {
-        selected.add(value);
-        item.classList.add('selected');
-      } else {
-        alert('Solo puedes seleccionar dos imágenes.');
+    if (element.classList.contains('selected')) {
+      // Deseleccionar
+      element.classList.remove('selected');
+      selecciones = selecciones.filter(id => id !== imagenId);
+      if (overlay) overlay.style.display = 'none';
+    } else {
+      if (selecciones.length >= MAX_SELECTIONS) {
+        alert('Solo puedes seleccionar 2 imágenes');
+        return;
       }
-    });
+      // Seleccionar
+      element.classList.add('selected');
+      selecciones.push(imagenId);
+      if (overlay) overlay.style.display = 'block';
+    }
+
+    // Actualizar contador y campo oculto
+    contadorSpan.textContent = selecciones.length;
+    const hiddenInput = document.getElementById('selected_images');
+    if (hiddenInput) hiddenInput.value = selecciones.join(',');
+  }
+
+  // Asignar evento de clic a cada imagen
+  imageItems.forEach(item => {
+    const imagenId = parseInt(item.dataset.id);
+    item.addEventListener('click', () => toggleSeleccion(item, imagenId));
   });
 
+  // Enviar respuestas al backend
   checkButton?.addEventListener('click', () => {
-    const selectedImages = document.querySelectorAll('.image-item.selected');
-    const selectedIds = Array.from(selectedImages).map(item => parseInt(item.dataset.id));
-
-    if (selectedIds.length !== MAX_SELECTIONS) {
+    if (selecciones.length !== MAX_SELECTIONS) {
       resultDiv.innerHTML = '<div class="alert alert-warning">Debes seleccionar exactamente 2 imágenes.</div>';
       return;
     }
 
-    const isCorrect = correctImageIds.every(id => selectedIds.includes(id)) &&
-                     selectedIds.every(id => correctImageIds.includes(id));
+    const isCorrect = correctImageIds.every(id => selecciones.includes(id)) &&
+                      selecciones.every(id => correctImageIds.includes(id));
 
     fetch('/guardar_respuesta/', {
       method: 'POST',
@@ -52,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'X-CSRFToken': getCookie('csrftoken')
       },
       body: JSON.stringify({
-        selected_ids: selectedIds,
+        selected_ids: selecciones,
         is_correct: isCorrect,
         activity_type: 'seleccion_imagenes',
         activity_id: 1,
@@ -60,10 +64,20 @@ document.addEventListener('DOMContentLoaded', () => {
       })
     })
     .then(response => response.json())
-    .then(data => console.log('Respuesta guardada:', data))
+    .then(data => {
+      console.log('Respuesta guardada:', data);
+    })
     .catch(error => console.error('Error al enviar al backend:', error));
   });
 });
+
+/*Actividad input*/
+
+document.addEventListener('DOMContentLoaded', () => {
+    const textInput = document.querySelectorAll('')
+
+});
+
 
 /*Actividad espacios en blanco*/
 const blanks = document.querySelectorAll('.blank');

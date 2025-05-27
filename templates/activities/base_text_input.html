@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+    <section class="section section-sm section-last bg-default bg-gray-4 ">
+        <div class="container pt-4">
+            <h2>Actividad: {{ activity.question }}</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Responder y continuar</button>
+            </form>
+            {% if user_answer %}
+                <p>Tu respuesta anterior: {{ user_answer.answer }}</p>
+                <p>{% if user_answer.is_correct %}¡Correcto!{% else %}Incorrecto{% endif %}</p>
+        </div>
+    </section>
+{% endif %}
+{% endblock %}

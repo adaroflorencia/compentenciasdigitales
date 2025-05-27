@@ -1,0 +1,114 @@
+{% load static %}
+
+<div class="container">
+
+    <form id="form-actividad" class="actividad">
+        {% csrf_token %}
+        <input type="hidden" name="respuesta" id="respuesta" value="incorrecto">
+        <input type="hidden" name="selected_images" id="selected_images" value="">
+
+        <div class="card shadow-lg">
+            <div class="card-body px-5 py-4">
+                <h4 class="ps-4 pt-2 text-uppercase">Selecciona un motor de búsqueda</h4>
+                <h6 class="ps-4 pt-2">Haz click para seleccionar una imagen. Solo 2 imágenes son correctas.</h6>
+                <div class="row p-4 gap-3 d-flex justify-content-center pt-4">
+                    <!-- Imagen 1 -->
+                    <div class="col-3 d-flex justify-content-center">
+                        <div class="image-item shade p-3 w-50" data-correct="no"
+                             onclick="toggleSeleccion(this, 'dropbox')">
+                            <img src="{% static 'images/dropbox.png' %}" alt="Imagen 1">
+                            <div class="selection-overlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Imagen 2 (correcta) -->
+                    <div class="col-3 d-flex justify-content-center">
+                        <div class="image-item shade p-3 w-50" data-correct="si"
+                             onclick="toggleSeleccion(this, 'google')">
+                            <img src="{% static 'images/google.png' %}" alt="Imagen 2">
+                            <div class="selection-overlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Imagen 3 -->
+                    <div class="col-3 d-flex justify-content-center">
+                        <div class="image-item shade p-3 w-50" data-correct="no"
+                             onclick="toggleSeleccion(this, 'vscode')">
+                            <img src="{% static 'images/vscode.png' %}" alt="Imagen 3">
+                            <div class="selection-overlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Imagen 4 -->
+                    <div class="col-3 d-flex justify-content-center">
+                        <div class="image-item shade p-3 w-50" data-correct="no"
+                             onclick="toggleSeleccion(this, 'linux')">
+                            <img src="{% static 'images/linux.png' %}" alt="Imagen 4">
+                            <div class="selection-overlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Imagen 5 (correcta) -->
+                    <div class="col-3 d-flex justify-content-center">
+                        <div class="image-item shade p-3 w-50" data-correct="si"
+                             onclick="toggleSeleccion(this, 'firefox')">
+                            <img src="{% static 'images/mozilla firefox.png' %}" alt="Imagen 5">
+                            <div class="selection-overlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Imagen 6 -->
+                    <div class="col-3 d-flex justify-content-center">
+                        <div class="image-item shade p-3 w-50" data-correct="no"
+                             onclick="toggleSeleccion(this, 'drive')">
+                            <img src="{% static 'images/drive.png' %}" alt="Imagen 6">
+                            <div class="selection-overlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Imagen 7 -->
+                    <div class="col-3 d-flex justify-content-center">
+                        <div class="image-item shade p-3 w-50" data-correct="no"
+                             onclick="toggleSeleccion(this, 'nodejs')">
+                            <img src="{% static 'images/nodejs.png' %}" alt="Imagen 7">
+                            <div class="selection-overlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Imagen 8 -->
+                    <div class="col-3 d-flex justify-content-center">
+                        <div class="image-item shade p-3 w-50" data-correct="no"
+                             onclick="toggleSeleccion(this, 'slack')">
+                            <img src="{% static 'images/slack.png' %}" alt="Imagen 8">
+                            <div class="selection-overlay"></div>
+                        </div>
+                    </div>
+
+                    <!-- Imagen 9 -->
+                    <div class="col-3 d-flex justify-content-center">
+                        <div class="image-item shade p-3 w-50" data-correct="no"
+                             onclick="toggleSeleccion(this, 'whatsapp')">
+                            <img src="{% static 'images/whatsapp.png' %}" alt="Imagen 9">
+                            <div class="selection-overlay"></div>
+                        </div>
+                    </div>
+                    <div class="text-center mb-3">
+                        <span id="contador-selecciones">0</span>/2 imágenes seleccionadas
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end mx-5 mb-5">
+                {% if has_next %}
+                    <button type="button"
+                            class="btn btn-stuffed mt-3 btn-same-width validar-imagenes">Siguiente
+                    </button>
+                {% else %}
+                    <button type="button"
+                            class="btn btn-stuffed mt-3 btn-same-width validar-imagenes">Ver Resultados
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+    </form>
+</div>

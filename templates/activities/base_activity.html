@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="activity-container">
+    <div class="activity-header">
+        <h1 class="activity-title">Actividades Interactivas</h1>
+    </div>
+    
+    <div class="activity-content">
+        {% block activity_content %}
+        
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

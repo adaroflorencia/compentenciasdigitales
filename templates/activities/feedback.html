@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Retroalimentación final</h2>
+<p>Respondiste correctamente {{ correct }} de {{ total }} actividades.</p>
+<ul>
+    {% for answer in answers %}
+        <li>
+            <strong>{{ answer.activity.question }}</strong><br>
+            Tu respuesta: {{ answer.answer }}<br>
+            {% if answer.is_correct %}
+                <span style="color:green;">Correcto</span>
+            {% else %}
+                <span style="color:red;">Incorrecto</span>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
