@@ -15376,36 +15376,101 @@ Version: 3.5.4 Timestamp: Sun Aug 30 13:30:32 EDT 2015
 
 /*Actividad Seleccionar imagen*/
 
-.image-item {
-    position: relative;
-    cursor: pointer;
-    border: 3px solid transparent;
-    border-radius: 5px;
-    overflow: hidden;
+
+/*estilos adicionales*/
+
+.matrix-container {
+    max-width: 600px;
+    margin: 0 auto;
 }
 
+.image-option-wrapper {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    width: 100%;
+    max-width: 150px;
+}
+
+.image-option-wrapper:hover {
+    transform: scale(1.05);
+}
+
+.image-item {
+    border: 3px solid transparent;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: #fff;
+}
+
+.image-item:hover {
+    border-color: #007bff;
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.15);
+}
+
+.option-image {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+}
 
 .selection-overlay {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 123, 255, 0.5);
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 123, 255, 0.8);
     opacity: 0;
-    transition: opacity 0.2s;
-    pointer-events: none;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.image-item.selected {
-    border-color: #0d6efd;
-}
-
-.image-item.selected .selection-overlay {
+.radio-input:checked + .option-image + .selection-overlay {
     opacity: 1;
 }
 
-/*pruebas*/
+.radio-input:checked + .option-image + .selection-overlay + .selection-indicator {
+    opacity: 1;
+}
+
+.radio-input:checked ~ .image-item,
+.image-item:has(.radio-input:checked) {
+    border-color: #28a745;
+    box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .matrix-container {
+        max-width: 100%;
+    }
+
+    .option-image {
+        height: 100px;
+    }
+}
+
+@media (max-width: 576px) {
+    .col-4 {
+        flex: 0 0 calc(33.333% - 10px);
+        max-width: calc(33.333% - 10px);
+    }
+
+    .option-image {
+        height: 80px;
+    }
+
+    .g-4 {
+        --bs-gutter-x: 0.5rem;
+        --bs-gutter-y: 0.5rem;
+    }
+}
+
+/*SVG pentagono*/
 
 svg path:hover {
     fill: var(--second-color);
@@ -15471,11 +15536,54 @@ svg path:hover {
 
 /*Feedback*/
 
-.quiz-header {
-    background: var(--main-color);
-    color: white;
-    border-radius: 15px;
-    padding: 2rem;
-    margin-bottom: 2rem;
-    text-align: center;
+.bg-gradient {
+    background: linear-gradient(135deg, #0788C6 0%, #2659C7 100%) !important;
+}
+
+.bg-color {
+    background-color: #0788C6;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: rgba(13, 110, 253, 0.1);
+    border-color: rgba(13, 110, 253, 0.25);
+}
+
+.accordion-button:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.progress-bar-animated {
+    animation: progress-bar-stripes 1s linear infinite;
+}
+
+@keyframes progress-bar-stripes {
+    0% {
+        background-position: 1rem 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+.accordion-item {
+    transition: all 0.3s ease;
+}
+
+.accordion-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+.badge {
+    font-weight: 500;
+}
+
+/* Colores suaves para badges */
+.bg-success-subtle {
+    background-color: rgba(25, 135, 84, 0.1) !important;
+}
+
+.bg-danger-subtle {
+    background-color: rgba(220, 53, 69, 0.1) !important;
 }

@@ -1,44 +1,131 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-    <section class="section section-sm section-last bg-default bg-gray-4 ">
-        <div class="container pt-4">
-            <div class="card shadow-lg mx-auto " style="max-width: 700px;">
-            <div class="quiz-header shadow m-4">
-                        <h3 class="oh font-weight-light">Resultado final</h3>
-                    </div>
-                <div class="card-body">
-                    
-                    <h5 class="ps-4 py-2 text-center"><strong>Respondiste correctamente {{ correct }} de {{ total }}
-                        actividades.</strong></h5>
-                    <div class="accordion mx-4" id="answersAccordion">
-                        {% for answer in answers %}
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="heading{{ forloop.counter }}">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="false"
-                                            aria-controls="collapse{{ forloop.counter }}">
-                                        {{ answer.activity.question }}:
+    <section class="section section-sm section-last bg-default bg-gray-4">
+        <div class="container pt-4 pb-5">
+            <!-- Card principal con mejor estructura -->
+            <div class="card shadow-lg border-0 mx-auto" style="max-width: 800px;">
 
-                                    </button>
-                                </h2>
-                                <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse"
-                                     aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#answersAccordion">
-                                    <div class="accordion-body">
-                                        <strong>Tu respuesta:</strong> {% if answer.is_correct %}
-                                            <span style="color:green;">Correcto</span>
-                                        {% else %}
-                                            <span style="color:red;">Incorrecto</span>
-                                        {% endif %}<br>
-                                        <strong>Retroalimentación:</strong> {{ answer.feedback }}
+                <!-- Header mejorado con gradiente y centrado -->
+                <div class="card-header bg-gradient text-center py-4 border-0"
+                     style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <div class="d-flex align-items-center justify-content-center mb-3">
+                        <i class="fas fa-trophy text-warning fs-2 me-3"></i>
+                        <h2 class="text-white mb-0 fw-light">Resultado Final</h2>
+                    </div>
+                </div>
+
+                <div class="card-body p-0">
+
+                    <!-- Sección de puntuación destacada -->
+                    <div class="bg-light py-4 px-4 text-center border-bottom">
+                        <div class="row align-items-center">
+                            <div class="col-md-8 mx-auto">
+                                <h4 class="mb-3 text-blue">
+                                    <i class="fas fa-chart-line me-2"></i>
+                                    Tu Puntuación
+                                </h4>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div class="badge bg-color fs-4 px-4 py-3 rounded-pill me-3">
+                                        {{ correct }}/{{ total }}
+                                    </div>
+                                    <div class="text-muted">
+                                        <strong>Respondiste correctamente {{ correct }} de {{ total }} actividades</strong>
                                     </div>
                                 </div>
+
+                                <!-- Barra de progreso visual -->
+                                <div class="mt-4">
+                                    <div class="progress" style="height: 12px;">
+                                        <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated progress-color"
+                                             role="progressbar"
+                                             style="width: {% widthratio correct total 100 %}%"
+                                             aria-valuenow="{{ correct }}"
+                                             aria-valuemin="0"
+                                             aria-valuemax="{{ total }}">
+                                        </div>
+                                    </div>
+                                    <small class="text-muted mt-2 d-block">
+                                        {% widthratio correct total 100 %}% de respuestas correctas
+                                    </small>
+                                </div>
                             </div>
-                        {% endfor %}
+                        </div>
                     </div>
 
+                    <!-- Sección del acordeón mejorada -->
+                    <div class="p-4">
+                        <div class="d-flex align-items-center mb-4">
+                            <h5 class="mb-0 text-blue ms-1">Detalle de Respuestas</h5>
+                        </div>
+
+                        <div class="accordion" id="answersAccordion">
+                            {% for answer in answers %}
+                                <div class="accordion-item border rounded-3 mb-2 shadow-sm">
+                                    <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                                        <button class="accordion-button collapsed rounded-3 py-3"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#collapse{{ forloop.counter }}"
+                                                aria-expanded="false"
+                                                aria-controls="collapse{{ forloop.counter }}">
+
+                                            <div class="d-flex align-items-center w-100">
+
+                                                <!-- Número de pregunta -->
+                                                <div class="me-3">
+                                                        {{ forloop.counter }}
+
+                                                </div>
+
+                                                <!-- Texto de la pregunta -->
+                                                <div class="flex-grow-1 text-start">
+                                                    <strong>{{ answer.activity.question }}</strong>
+                                                </div>
+
+                                                <!-- Badge de estado -->
+                                                <div class="me-3">
+                                                    {% if answer.is_correct %}
+                                                        <span class="badge bg-success-subtle text-success px-3 py-2">Correcto</span>
+                                                    {% else %}
+                                                        <span class="badge bg-danger-subtle text-danger px-3 py-2">Incorrecto</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </button>
+                                    </h2>
+
+                                    <div id="collapse{{ forloop.counter }}"
+                                         class="accordion-collapse collapse"
+                                         aria-labelledby="heading{{ forloop.counter }}"
+                                         data-bs-parent="#answersAccordion">
+                                        <div class="accordion-body bg-light rounded-bottom-3 p-4">
+                                            <div class="col-md-6">
+                                                    <div class="d-flex align-items-center mb-2">
+                                                        <i class="fas fa-lightbulb text-warning me-2"></i>
+                                                        <strong class="text-warning">Retroalimentación:</strong>
+                                                    </div>
+                                                    <p class="mb-0 text-muted">{{ answer.feedback }}</p>
+                                                </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer del card -->
+                <div class="card-footer bg-light text-center py-4 border-0">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <i class="fas fa-star text-warning me-2"></i>
+                        <span class="text-muted">¡Buen trabajo completando el quiz!</span>
+                        <i class="fas fa-star text-warning ms-2"></i>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
 {% endblock %}

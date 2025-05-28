@@ -4,13 +4,42 @@
     <section class="section section-sm section-last bg-default bg-gray-4">
         <div class="container pt-4">
             <div class="card shadow-lg">
-                <div class="card-body px-5 py-4">
-                    <h4 class="ps-4 pt-2 text-uppercase">{{ activity.question }}</h4>
-                    <h6 class="ps-4 pt-2">{{ activity.subquestion }}</h6>
+                <div class="card-body m-3 m-xxl-5">
+                    <h4 class="text-uppercase text-center text-xl-start">{{ activity.question }}</h4>
+                    <h6 class="pt-3 text-justify">{{ activity.subquestion }}</h6>
                     <form method="post">
                         {% csrf_token %}
                         <div class="ps-4 pt-4">
-                            {{ form.as_p }}
+                            <div class="form-group mb-4">
+                            <p>Selecciona: </p>
+                                <label for="{{ form.answer.id_for_label }}" class="form-label fw-bold text-primary mb-3">
+                                    <i class="fas fa-list-ul me-2"></i>{{ form.answer.label }}
+                                </label>
+                                <select name="{{ form.answer.name }}" 
+                                        id="{{ form.answer.id_for_label }}" 
+                                        class="form-select form-select-lg shadow-sm custom-select" 
+                                        required>
+                                    <option value="" disabled selected>-- Selecciona una opción --</option>
+                                    {% for choice in form.answer.field.choices %}
+                                        <option value="{{ choice.0 }}"
+                                                {% if form.answer.value == choice.0 %}selected{% endif %}>
+                                            {{ choice.1 }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                                {% if form.answer.help_text %}
+                                    <div class="form-text text-muted mt-2">
+                                        <i class="fas fa-info-circle me-1"></i>{{ form.answer.help_text }}
+                                    </div>
+                                {% endif %}
+                                {% if form.answer.errors %}
+                                    <div class="invalid-feedback d-block mt-2">
+                                        {% for error in form.answer.errors %}
+                                            <i class="fas fa-exclamation-triangle me-1"></i>{{ error }}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
                         <div class="d-flex justify-content-end mx-5 mb-5">
                             <button type="submit" class="btn btn-stuffed mt-3 btn-same-width validacion">Responder y
