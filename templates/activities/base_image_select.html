@@ -5,12 +5,11 @@
         <div class="container pt-4">
             <div class="card shadow-lg">
                 <div class="card-body m-3 m-xxl-5">
-                    <h4 class="text-uppercase text-center text-xl-start">{{ activity.question }}</h4>
+                    <h4 class="text-uppercase text-center text-xl-start mt-2">{{ activity.question }}</h4>
                     <h6 class="pt-3 text-justify">{{ activity.subquestion }}</h6>
 
                     <form method="post">
                         {% csrf_token %}
-
                         <!-- Contenedor principal de la matriz -->
                         <div class="matrix-container my-5">
                             <div class="row g-4 justify-content-center">
