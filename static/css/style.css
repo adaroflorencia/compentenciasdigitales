@@ -15480,10 +15480,14 @@ svg path:hover {
 
 .svgmacro {
     width: 100%;
-    max-width: 500px;
+    max-width: 450px;
     height: auto;
     display: block;
     margin: 0px auto;
+}
+
+.disabled{
+    pointer-events: none;
 }
 
 

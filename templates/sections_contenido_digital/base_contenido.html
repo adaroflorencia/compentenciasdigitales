@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% include 'sections_contenido_digital/slider_contenido.html' %}
+    {% include 'sections_contenido_digital/why_contenido.html' %}
+    {% include 'sections_contenido_digital/content_contenido.html' %}
+    {% include 'sections_contenido_digital/route_contenido.html' %}
+    
+    {% block extra_scripts %}
+        <script src="{% static 'js/activity.js' %}"></script>
+    {% endblock %}
+{% endblock %}

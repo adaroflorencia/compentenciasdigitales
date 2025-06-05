@@ -25,6 +25,9 @@ def informacion_datos(request):
 def comunicacion_colaboracion(request):
     return render(request, 'sections_comunicacion/base_comunicacion.html')
 
+def contenido_digital(request):
+    return render(request, 'sections_contenido_digital/base_contenido.html')
+
 
 def base_activity(request):
     first_activity = Activity.objects.order_by('order').first()
