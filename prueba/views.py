@@ -28,6 +28,11 @@ def comunicacion_colaboracion(request):
 def contenido_digital(request):
     return render(request, 'sections_contenido_digital/base_contenido.html')
 
+def seguridad_digital(request):
+    return render(request, 'sections_seguridad_digital/base_seguridad.html')
+
+def resolucion_problemas(request):
+    return render(request, 'sections_resolucion_problemas/base_resolucion.html')
 
 def base_activity(request):
     first_activity = Activity.objects.order_by('order').first()

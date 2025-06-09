@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% include 'sections_seguridad_digital/slider_seguridad.html' %}
+    {% include 'sections_seguridad_digital/why_seguridad.html' %}
+    {% include 'sections_seguridad_digital/content_seguridad.html' %}
+    {% include 'sections_seguridad_digital/route_seguridad.html' %}
+    
+    {% block extra_scripts %}
+        <script src="{% static 'js/activity.js' %}"></script>
+    {% endblock %}
+{% endblock %}
