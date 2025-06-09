@@ -15259,7 +15259,10 @@ Version: 3.5.4 Timestamp: Sun Aug 30 13:30:32 EDT 2015
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 
 .go-corner,
-.go-corner2 {
+.go-corner2,
+.go-corner3,
+.go-corner4,
+.go-corner5{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15280,20 +15283,39 @@ Version: 3.5.4 Timestamp: Sun Aug 30 13:30:32 EDT 2015
     background-color: #2686C7;
 }
 
+.go-corner3 {
+    background-color: #EB591E;
+}
+
+.go-corner4{
+    background-color: #56D755;
+}
+
+.go-corner5{
+    background-color: #E8242F;
+}
+
 .go-arrow,
-.go-arrow2 {
+.go-arrow2,
+.go-arrow3{
     margin-top: -4px;
     margin-right: -4px;
     font-family: courier, sans;
+}
+
+.go-arrow {
+    color: grey;
 }
 
 .go-arrow2 {
     color: #fff;
 }
 
-.go-arrow {
-    color: grey;
+.go-arrow3 {
+    color: #000000;
 }
+
+
 
 .card1,
 .card2 {

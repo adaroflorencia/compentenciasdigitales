@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    {% include 'sections_resolucion_problemas/slider_resolucion.html' %}
+    {% include 'sections_resolucion_problemas/why_resolucion.html' %}
+    {% include 'sections_resolucion_problemas/content_resolucion.html' %}
+    {% include 'sections_resolucion_problemas/route_resolucion.html' %}
+    
+    {% block extra_scripts %}
+        <script src="{% static 'js/activity.js' %}"></script>
+    {% endblock %}
+{% endblock %}
