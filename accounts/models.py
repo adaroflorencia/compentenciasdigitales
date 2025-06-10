@@ -1,6 +1,14 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.utils import timezone
+from django.core.exceptions import ValidationError
+
+
+def validate_email_domain(email):
+    """Valida que el email termine con @uncuyo.edu.ar"""
+    allowed_domain = '@uncuyo.edu.ar'
+    if not email.endswith(allowed_domain):
+        raise ValidationError(f'El correo electrónico debe terminar con {allowed_domain}')
 
 
 class Role(models.Model):
@@ -16,11 +24,13 @@ class Role(models.Model):
     def __str__(self):
         return self.get_name_display()
 
+
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError('El correo electrónico es obligatorio')
         email = self.normalize_email(email)
+        validate_email_domain(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
@@ -37,6 +47,7 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
+
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     full_name = models.CharField(max_length=255)
@@ -49,6 +60,18 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['full_name']
+
+    def clean(self):
+        super().clean()
+        if self.email and not self.pk:
+            validate_email_domain(self.email)
+        elif self.email and self.pk:
+            try:
+                original = CustomUser.objects.get(pk=self.pk)
+                if original.email != self.email:
+                    validate_email_domain(self.email)
+            except CustomUser.DoesNotExist:
+                pass
 
     def __str__(self):
         return self.email

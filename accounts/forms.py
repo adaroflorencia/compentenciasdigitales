@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import CustomUser, Role
+from .models import CustomUser, Role, validate_email_domain
 from django.core.exceptions import ValidationError
 
 class CustomUserCreationForm(UserCreationForm):
@@ -24,6 +24,12 @@ class CustomUserCreationForm(UserCreationForm):
             raise ValidationError("Las contraseñas no coinciden")
         return password2
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email:
+            validate_email_domain(email)
+        return email
+
     role = forms.ModelChoiceField(
         queryset=Role.objects.exclude(name='administrador'),
         widget=forms.Select(attrs={'class': 'form-select'}),
@@ -34,11 +40,18 @@ class CustomUserCreationForm(UserCreationForm):
         model = CustomUser
         fields = ('email', 'full_name', 'role', 'password1', 'password2')
         widgets = {
-            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Correo electrónico'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Correo electrónico (debe terminar con @uncuyo.edu.ar)'}),
             'full_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre completo'}),
         }
 
 class CustomUserChangeForm(UserChangeForm):
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email:
+            validate_email_domain(email)
+        return email
+
     role = forms.ModelChoiceField(
         queryset=Role.objects.all(),
         widget=forms.Select(attrs={'class': 'form-select'}),
@@ -49,6 +62,9 @@ class CustomUserChangeForm(UserChangeForm):
         model = CustomUser
         fields = ('email', 'full_name', 'role')
         widgets = {
-            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Correo electrónico (debe terminar con @uncuyo.edu.ar)'
+            }),
             'full_name': forms.TextInput(attrs={'class': 'form-control'}),
         }
