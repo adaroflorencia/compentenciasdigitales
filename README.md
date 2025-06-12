@@ -4,6 +4,17 @@
 
 Este proyecto tiene como objetivo identificar las brechas de competencias digitales en diferentes perfiles institucionales (docentes, estudiantes, personal no docente) a través de un sistema de diagnóstico alineado con los marcos europeos DigComp 2.2 y DigCompEdu.
 
+## 🎯 Requerimientos
+
+- MSY2S
+  - Pango
+  - Libgobject
+  - Gettext
+- Python 3.12
+- django
+- psycopg2-binary
+- weasyprint
+
 ## 🎯 Objetivos
 
 - Relevar el nivel de competencias digitales de la comunidad educativa.
