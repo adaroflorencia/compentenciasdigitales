@@ -40,7 +40,7 @@
       "question": "Selecciona la opción correcta",
       "subquestion": "¿Qué es la infodemia?",
       "options": ["Es la replicación masiva de noticias e informaciones reales o falsas.", "Es una enfermedad causada por exceso de información digital.", "Es una red social creada para difundir noticias falsas."],
-      "correct_answer": ["Es la replicación masiva de noticias e informaciones reales o falsas."],
+      "correct_answer": "Es la replicación masiva de noticias e informaciones reales o falsas.",
       "custom_style": ""
     }
   },
