@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, PasswordResetForm
 from .models import CustomUser, Role, validate_email_domain
 from django.core.exceptions import ValidationError
 
@@ -68,3 +68,20 @@ class CustomUserChangeForm(UserChangeForm):
             }),
             'full_name': forms.TextInput(attrs={'class': 'form-control'}),
         }
+
+
+class CustomPasswordResetForm(PasswordResetForm):
+    email = forms.EmailField(
+        label="Correo:",
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control flex-grow-1',
+            'placeholder': 'ejemplo@uncuyo.edu.ar'
+        })
+    )
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email:
+            from .models import validate_email_domain
+            validate_email_domain(email)
+        return email

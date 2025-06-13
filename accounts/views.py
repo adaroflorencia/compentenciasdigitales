@@ -4,6 +4,9 @@ from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import PasswordResetView
+from django.urls import reverse_lazy
+from .forms import CustomPasswordResetForm
 
 def registro_usuario(request):
     next_url = request.GET.get('next', 'index')
@@ -40,3 +43,14 @@ def iniciar_sesion(request):
 def signout(request):
     logout(request)
     return redirect('index')
+
+
+class CustomPasswordResetView(PasswordResetView):
+    form_class = CustomPasswordResetForm
+    template_name = 'accounts/password_reset_form.html'
+    success_url = reverse_lazy('password_reset')  # Redirige a la misma página
+
+    def form_valid(self, form):
+        messages.success(self.request,
+                         'Se ha enviado un correo electrónico con instrucciones para restablecer tu contraseña.')
+        return super().form_valid(form)
