@@ -1,12 +1,5 @@
 [
   {
-    "model": "prueba.topico",
-    "pk": 1,
-    "fields": {
-      "nombre_topico": 1
-    }
-  },
-  {
     "model": "prueba.subtopico",
     "pk": 1,
     "fields": {
