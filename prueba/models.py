@@ -3,18 +3,13 @@ from accounts.models import Role, CustomUser
 from form.models import Topic
 from django.core.exceptions import ValidationError
 
-class Topico(models.Model):
-    nombre_topico = models.ForeignKey(Topic, on_delete=models.CASCADE)
-    def __str__(self):
-        return f"{self.nombre_topico}"
-
 
 class Subtopico(models.Model):
-    topico = models.ForeignKey(Topico, on_delete=models.CASCADE)
+    topico = models.ForeignKey(Topic, on_delete=models.CASCADE)
     nombre_subtopico = models.TextField()
 
     def __str__(self):
-        return f"{self.topico.nombre_topico} - {self.nombre_subtopico}"
+        return f"{self.topico.name} - {self.nombre_subtopico}"
 
 class Activity(models.Model):
     ACTIVITY_TYPES = [

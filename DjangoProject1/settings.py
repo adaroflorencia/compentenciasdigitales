@@ -138,3 +138,17 @@ LOGIN_URL = '/accounts/login/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Asegurate de que no haya caracteres especiales problemáticos
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp-mail.outlook.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'tucorreo@uncuyo.edu.ar'  # ¿Hay ñ aquí?
+EMAIL_HOST_PASSWORD = 'tu_contrasenia'  # ¿Hay ñ aquí?
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_TIMEOUT = 30
+
+# Agregar configuración de codificación
+DEFAULT_CHARSET = 'utf-8'
+
